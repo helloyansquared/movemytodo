@@ -61,7 +61,7 @@ QA = {
     "export": ("How do I export Microsoft To Do?",
                f"Sign in to MoveMyTodo with your Microsoft account and download a free backup as CSV (opens in Excel and Google Sheets), Markdown, JSON or a printable page. Microsoft's own export isn't available yet as of {CHECKED}."),
     "google": ("Can I move Microsoft To Do to Google Tasks?",
-               "Yes. MoveMyTodo signs in to Google Tasks with your permission and creates a list for each To Do list, with steps as subtasks, notes, due dates and completed tasks. Google Tasks has no import button of its own." + (" Until Google finishes verifying MoveMyTodo, Google shows a “Google hasn't verified this app” page first: click Advanced, then Go to movemytodo.com." if GOOGLE_REVIEW else "")),
+               "Yes. MoveMyTodo signs in to Google Tasks with your permission and creates a list for each To Do list, with steps as subtasks, notes, due dates and completed tasks. Google Tasks has no import button of its own." + (" Until Google finishes reviewing MoveMyTodo, Google shows an extra “Google hasn't verified this app” screen first; choose Advanced there to continue." if GOOGLE_REVIEW else "")),
     "apple": ("Can I move Microsoft To Do to Apple Reminders?",
               "Yes, on a Mac: MoveMyTodo makes an import file that adds a Reminders list for each To Do list, with notes, due dates, reminder times and flags, and iCloud syncs it to your iPhone. Without a Mac, see the free iPhone method in our Apple Reminders guide."),
     "safe": ("Is it safe to sign in? What can MoveMyTodo see?",
@@ -98,7 +98,7 @@ PAGES = [
 <li>On <a href="/#app">MoveMyTodo</a>, click <b>Sign in with Microsoft</b> and use the account you use for To Do. Microsoft asks you to allow <i>read</i> access to your tasks.</li>
 <li>Check the numbers (lists, tasks, steps) and untick any lists you don't want. Download the free CSV backup while you're there.</li>
 <li>In <b>Move to your new app</b>, choose <b>Google Tasks</b> and click <b>Connect Google Tasks &amp; move</b>.</li>
-<li>Pick your Google account and allow access to Google Tasks. """ + ("""While Google is still verifying MoveMyTodo, it first shows a page saying “Google hasn't verified this app”: click <b>Advanced</b>, then <b>Go to movemytodo.com (unsafe)</b>. """ if GOOGLE_REVIEW else "") + """The lists appear in Google Tasks as they're written; a big account takes a few minutes.</li>
+<li>Pick your Google account and allow access to Google Tasks. """ + ("""While Google's review of MoveMyTodo isn't finished, Google first shows an extra screen saying “Google hasn't verified this app”; choose <b>Advanced</b> there to continue. """ if GOOGLE_REVIEW else "") + """The lists appear in Google Tasks as they're written; a big account takes a few minutes.</li>
 <li>Open <a href="https://tasks.google.com/">tasks.google.com</a>, Gmail's side panel or the Google Tasks app to check them.</li>
 </ol>
 <h2>What carries over</h2>

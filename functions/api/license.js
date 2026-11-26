@@ -8,12 +8,23 @@ const DODO = "https://live.dodopayments.com/licenses/";
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 
+// Reviewer key for Google's OAuth app review: lets reviewers try the Pro-only Google Tasks move without paying.
+// Only its SHA-256 is here; the key itself is given to Google in the verification form. Set to "" to switch it off.
+const REVIEW_KEY_SHA256 = "734846138a871f130061ba685392836771b391fb1a4eb4dd343c18e33271c933";
+async function isReviewKey(key) {
+  if (!REVIEW_KEY_SHA256 || !/^MMT-REVIEW-/.test(key)) return false;
+  const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(key));
+  return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, "0")).join("") === REVIEW_KEY_SHA256;
+}
+
 export async function onRequestPost({ request }) {
   let input;
   try { input = await request.json(); } catch { return json({ ok: false, error: "bad_request" }, 400); }
   const action = input && input.action;
   const key = typeof input.license_key === "string" ? input.license_key.trim() : "";
   if (!["activate", "validate"].includes(action) || !key || key.length > 200) return json({ ok: false, error: "bad_request" }, 400);
+
+  if (await isReviewKey(key)) return json(action === "activate" ? { ok: true, id: "review" } : { ok: true });
 
   const body = action === "activate"
     ? { license_key: key, name: String(input.name || "browser").slice(0, 60) }
