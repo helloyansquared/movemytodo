@@ -613,6 +613,15 @@ async function gt(path, token, method, body) {
   }
   throw new Error("Google Tasks is busy (rate limit). Wait a minute and press the button again; lists already done are kept.");
 }
+// Hidden test route for recording Google's OAuth review video (?review-demo): sample data and a
+// same-tab Google sign-in (OAuth implicit redirect) instead of the pop-up. Same scope, same writes.
+const REVIEW_DEMO = new URLSearchParams(location.search).has("review-demo") || sessionStorage.getItem("mmt-review-demo") === "1";
+function googleRedirect() {
+  const state = Math.random().toString(36).slice(2);
+  sessionStorage.setItem("mmt-gstate", state); sessionStorage.setItem("mmt-review-demo", "1");
+  location.href = "https://accounts.google.com/o/oauth2/v2/auth?" + new URLSearchParams({ client_id: GOOGLE_CLIENT_ID, redirect_uri: SITE, response_type: "token",
+    scope: "https://www.googleapis.com/auth/tasks", state, prompt: "consent", include_granted_scopes: "false" });
+}
 $("goGoogle").onclick = async () => {
   const m = forMove(); if (!m.stats.tasks) { alert("Nothing selected to move."); return; }
   if (GOOGLE_CLIENT_ID.startsWith("__")) { status("Google Tasks isn't connected on this copy yet.", "err", $("gStatus")); return; }
@@ -621,11 +630,18 @@ $("goGoogle").onclick = async () => {
     $("pay").scrollIntoView({ block: "center", behavior: "smooth" }); return;
   }
   const btn = $("goGoogle"); btn.disabled = true; $("gLog").innerHTML = "";
-  const log = t => { const d = document.createElement("div"); d.textContent = t; $("gLog").prepend(d); };
+  if (REVIEW_DEMO) { googleRedirect(); return; }
   try {
     status("Opening Google…", "", $("gStatus"));
     await loadGIS();
     const token = await googleToken();
+    await moveToGoogle(m, token);
+  } catch (e) { status(e.message, "err", $("gStatus")); }
+  finally { btn.disabled = false; }
+};
+async function moveToGoogle(m, token) {
+  const log = t => { const d = document.createElement("div"); d.textContent = t; $("gLog").prepend(d); };
+  {
     const plan = CORE.googlePlan(m);
     const total = plan.reduce((n, l) => n + l.tasks.reduce((k, t) => k + 1 + t.steps.length, 0), 0);
     let done = 0;
@@ -654,12 +670,20 @@ $("goGoogle").onclick = async () => {
     }
     status(`Done! ${plural(done, "task")} and subtasks are in Google Tasks.${freeNotice(m)}`, "ok", $("gStatus"));
     $("gLog").insertAdjacentHTML("afterbegin", `<div><a href="https://tasks.google.com/" target="_blank" rel="noopener">Open Google Tasks →</a></div>`);
-  } catch (e) { status(e.message, "err", $("gStatus")); }
-  finally { btn.disabled = false; }
-};
+  }
+}
 
 // ── Start ────────────────────────────────────────────────────────────────────
 setPro(PRO);
+if (REVIEW_DEMO) {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get("access_token") && h.get("state") && h.get("state") === sessionStorage.getItem("mmt-gstate")) {
+    const token = h.get("access_token");
+    sessionStorage.removeItem("mmt-gstate"); history.replaceState(null, "", location.pathname + "?review-demo");
+    demo(); $("tab-google").click();
+    setTimeout(() => { $("t-google").scrollIntoView({ block: "start" }); status("Connected to Google. Moving…", "", $("gStatus")); moveToGoogle(forMove(), token).catch(e => status(e.message, "err", $("gStatus"))); }, 300);
+  } else if (h.get("error")) { history.replaceState(null, "", location.pathname + "?review-demo"); demo(); status("Google: " + h.get("error"), "err", $("gStatus")); }
+}
 const qs = new URLSearchParams(location.search);
 if (qs.get("license_key")) {
   const key = qs.get("license_key").split(",")[0];
