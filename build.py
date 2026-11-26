@@ -27,7 +27,10 @@ FONT_FACES = ''.join(f'@font-face{{font-family:"{fam}";src:url(/fonts/{f}.woff2)
                     ("Public Sans", "public-sans-latin-400-normal", 400), ("Public Sans", "public-sans-latin-600-normal", 600), ("Public Sans", "public-sans-latin-700-normal", 700)])
 PRELOAD = '<link rel="preload" href="/fonts/big-shoulders-display-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>\n<link rel="preload" href="/fonts/public-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>'
 ORG = {"@type": "Organization", "@id": U() + "#org", "name": "MoveMyTodo", "url": U(), "logo": U() + "logo.png", "email": C.EMAIL,
+       "sameAs": [C.GITHUB], "founder": {"@id": U('about') + "#maker"},
        "parentOrganization": {"@type": "Organization", "name": "YanSquared"}}
+PERSON = {"@type": "Person", "@id": U('about') + "#maker", "name": C.MAKER, "url": U('about'), "jobTitle": "Independent developer, maker of MoveMyTodo",
+          "worksFor": {"@id": U() + "#org"}, "sameAs": [C.GITHUB]}
 
 def faq_html(keys):
     return '\n'.join(f'  <details{" open" if i == 0 else ""}><summary>{tx(C.QA[k][0])}</summary><p>{tx(C.QA[k][1])}</p></details>' for i, k in enumerate(keys))
@@ -38,7 +41,7 @@ def ld(nodes):
     return '<script type="application/ld+json">\n' + json.dumps(nodes, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '\n</script>'
 
 FOOTLINKS = ('<nav class="foot" aria-label="Guides">' + ''.join(f'<a href="/{p["slug"]}/">{esc(p["crumb"])}</a>' for p in C.PAGES)
-             + f'<a href="/privacy/">Privacy</a><a href="/terms/">Terms &amp; refunds</a><a href="{C.GITHUB}">Source code on GitHub</a><a href="mailto:{C.EMAIL}">{C.EMAIL}</a></nav>')
+             + f'<a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms &amp; refunds</a><a href="{C.GITHUB}">Source code on GitHub</a><a href="mailto:{C.EMAIL}">{C.EMAIL}</a></nav>')
 GUIDES = ''.join(f'<a href="/{p["slug"]}/">{esc(p["h1"])}<span>{esc(p["description"])}</span></a>' for p in C.PAGES)
 
 def fill_ids(s):
@@ -64,9 +67,11 @@ app = {"@type": "WebApplication", "@id": U() + "#app", "name": "MoveMyTodo", "ur
        "datePublished": C.PUBLISHED, "dateModified": C.LAST_UPDATED, "publisher": {"@id": U() + "#org"}, "isAccessibleForFree": True,
        "featureList": ["Read-only Microsoft sign-in", "Free backup as CSV, Markdown, JSON and printable page", "Move to Google Tasks with steps as subtasks",
                        "Apple Reminders import for Mac", "Things 3 import", "Todoist CSV files"],
-       "offers": [{"@type": "Offer", "name": "Backup and scan", "price": "0", "priceCurrency": "USD"},
-                  {"@type": "Offer", "name": "MoveMyTodo Pro (move all lists)", "price": C.PRICE, "priceCurrency": "USD", "url": U() + "#pricing"}]}
-home_ld = ld([{"@context": "https://schema.org", **ORG},
+       "offers": [{"@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD",
+                   "description": f"Scan every list, full backup (CSV, Markdown, JSON, printable page), Todoist CSV files, and moving up to {C.FREE_N} tasks from one list."},
+                  {"@type": "Offer", "name": "MoveMyTodo Pro", "price": C.PRICE, "priceCurrency": "USD", "url": U() + "#pricing",
+                   "description": "One-time payment, no subscription. Moves all lists and tasks; 14-day refund." + (" " + C.GOOGLE_NOTE if C.GOOGLE_REVIEW else "")}]}
+home_ld = ld([{"@context": "https://schema.org", **ORG}, {"@context": "https://schema.org", **PERSON},
               {"@context": "https://schema.org", "@type": "WebSite", "@id": U() + "#site", "name": "MoveMyTodo", "url": U(), "inLanguage": "en-US", "publisher": {"@id": U() + "#org"}},
               {"@context": "https://schema.org", **app}, faq_ld(C.HOME_FAQ)])
 for k, v in {'<!--SEO-HEAD-->': head, '<!--LDJSON-->': home_ld, '<!--HOME-FAQ-->': faq_html(C.HOME_FAQ), '<!--FACTS-->': C.facts_table(),
@@ -99,7 +104,9 @@ pre{background:var(--ink);color:#f6f0de;border-radius:10px;padding:14px;overflow
 details{border-bottom:1.5px solid var(--line);padding:4px 0}summary{cursor:pointer;font-weight:700;min-height:46px;display:flex;align-items:center}details p{margin:2px 0 14px;color:#3c4560}
 .related{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:16px 18px;margin-top:30px}.related ul{margin:6px 0 0;padding-left:20px}
 footer{background:var(--ink);color:#c9d0e4;font-size:14px;padding:26px 0}footer a{color:#fff}.foot{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:10px}
-a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px}"""
+a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px}.src{font-size:14px;color:var(--soft)}
+.log{padding-left:20px}.log li{margin:6px 0}.log time{font-weight:600}
+"""
 
 def shell(title, desc, canon, h1, crumb, body_html, ldnodes, robots=None):
     return f"""<!DOCTYPE html>
@@ -137,19 +144,45 @@ def crumbs_ld(name, url):
         {"@type": "ListItem", "position": 2, "name": name, "item": url}]}
 
 PAGES = {p['slug']: p for p in C.PAGES}
+CHANGELOG_HTML = '<ul class="log">' + ''.join(f'<li><time datetime="{d}">{human(d)}</time>: {tx(t)}</li>' for d, t in C.CHANGELOG) + '</ul>'
 for p in C.PAGES:
     url = U(p['slug'])
     body = (f'<p class="answer">{tx(p["answer"])}</p>\n<a class="cta" href="/#app">Scan my To Do lists</a>\n'
             f'<p class="meta">Last updated: <time datetime="{C.LAST_UPDATED}">{upd_human}</time> · Free scan and backup · Read-only sign-in</p>\n'
-            + p['body'].replace('{FACTS}', C.facts_table())
+            + p['body'].replace('{FACTS}', C.facts_table()).replace('{CHANGELOG}', CHANGELOG_HTML)
             + f'\n<h2>Questions</h2>\n{faq_html(p["faq"])}\n'
             + '<aside class="related"><b>Related guides</b><ul>' + ''.join(f'<li><a href="/{s2}/">{tx(PAGES[s2]["h1"])}</a></li>' for s2 in p['links'])
             + '<li><a href="/">MoveMyTodo: move Microsoft To Do to Google Tasks or Apple Reminders</a></li></ul></aside>')
     article = {"@context": "https://schema.org", "@type": "TechArticle", "headline": p['h1'], "description": p['description'], "url": url,
                "inLanguage": "en-US", "datePublished": C.PUBLISHED, "dateModified": C.LAST_UPDATED, "image": U() + "og.png",
-               "author": {"@id": U() + "#org"}, "publisher": {"@context": "https://schema.org", **ORG}, "mainEntityOfPage": url}
+               "author": PERSON, "publisher": ORG, "mainEntityOfPage": url}
     out = pub / p['slug']; out.mkdir(exist_ok=True)
     (out / 'index.html').write_text(shell(p['title'], p['description'], url, p['h1'], p['crumb'], body, [crumbs_ld(p['crumb'], url), article, faq_ld(p['faq'])]))
+
+# ── About (who's behind the tool: a site asking for Microsoft access needs a visible person) ──
+about = f"""<p class="answer">MoveMyTodo is a small browser tool made by {C.MAKER}, an independent developer at YanSquared, for people leaving Microsoft To Do before it retires on June 30, 2027. It isn't made by or affiliated with Microsoft, Google, Apple, Cultured Code (Things) or Doist (Todoist).</p>
+<p class="meta">Published <time datetime="{C.PUBLISHED}">{human(C.PUBLISHED)}</time> · Last updated: {upd_human}</p>
+<h2>Why it exists</h2>
+<p>When Microsoft announced on November 18, 2026 that the To Do apps would retire, people with years of lists had nowhere obvious to take them. Todoist and TickTick have their own importers, but Google Tasks, Apple Reminders and Things 3 don't. MoveMyTodo fills that gap, and gives everyone a free backup they control, whichever app they pick.</p>
+<h2>How it handles your data</h2>
+<ul>
+<li>Sign-in is read-only: MoveMyTodo can't change or delete anything in To Do.</li>
+<li>Your tasks are read straight into your browser tab and written directly to the app you choose. They never reach our servers, and nothing is kept after you close the tab.</li>
+<li>No cookies, analytics or ads. The full <a href="/privacy/">privacy policy</a> explains each permission.</li>
+<li>The code is open source, so anyone can check what it does: <a href="{C.GITHUB}">{C.GITHUB.replace("https://", "")}</a>.</li>
+</ul>
+<h2>How the facts are checked</h2>
+<p>Dates and rules about the retirement come from Microsoft's own support page, <a href="{C.MS_SOURCE}">“Moving from Microsoft To Do to Microsoft Planner”</a>, and Microsoft's announcement. Every guide shows when it was last checked, and the <a href="/microsoft-to-do-shutting-down/#updates">shutdown page keeps a dated log</a> of changes. When Microsoft updates its guidance or ships its export tool, the guides are updated.</p>
+<h2>Pricing</h2>
+<p>Scanning and the full backup are free with no limits. Moving up to {C.FREE_N} tasks from one list is free; MoveMyTodo Pro moves everything for ${C.PRICE} once, with a 14-day refund. {C.GOOGLE_NOTE if C.GOOGLE_REVIEW else ""}</p>
+<h2>Contact</h2>
+<p>Questions, bugs or a list that didn't move right: email <a href="mailto:{C.EMAIL}">{C.EMAIL}</a>. {C.MAKER} reads every message.</p>"""
+(pub / 'about').mkdir(exist_ok=True)
+(pub / 'about/index.html').write_text(shell('About MoveMyTodo: Who Makes It and How It Works', f'MoveMyTodo is an independent, open-source browser tool by {C.MAKER} (YanSquared) for leaving Microsoft To Do. Who makes it, how your data is handled, and how facts are checked.',
+                                            U('about'), 'About MoveMyTodo', 'About', about,
+                                            [crumbs_ld('About', U('about')),
+                                             {"@context": "https://schema.org", "@type": "AboutPage", "url": U('about'), "name": "About MoveMyTodo", "inLanguage": "en-US",
+                                              "dateModified": C.LAST_UPDATED, "mainEntity": ORG, "author": PERSON}]))
 
 # ── Privacy & terms (also what Google and Microsoft show on their consent screens) ──
 priv = f"""<p class="answer">MoveMyTodo reads your Microsoft To Do tasks inside your own browser tab, and only when you ask it to. Your tasks are never sent to, stored on or seen by our servers.</p>
@@ -193,25 +226,34 @@ terms = f"""<p class="answer">MoveMyTodo is a small independent tool. Use it to 
                                     '<p class="answer">That page doesn\'t exist. <a href="/">Go to MoveMyTodo</a> to back up or move your Microsoft To Do lists.</p>', None, robots='noindex'))
 
 # ── robots, sitemap, llms.txt ─────────────────────────────────────────────────
-(pub / 'robots.txt').write_text(f"User-agent: *\nAllow: /\n\nSitemap: {site}sitemap.xml\n")
-urls = [U()] + [U(p['slug']) for p in C.PAGES] + [U('privacy'), U('terms')]
+BOTS = ["Googlebot", "Bingbot", "Google-Extended", "OAI-SearchBot", "ChatGPT-User", "GPTBot", "ClaudeBot", "Claude-SearchBot", "Claude-User",
+        "PerplexityBot", "Perplexity-User", "Applebot", "Applebot-Extended", "DuckAssistBot", "meta-externalagent", "MistralAI-User"]
+(pub / 'robots.txt').write_text("# Search engines and AI answer engines are welcome to read and cite every page.\n"
+    + "".join(f"User-agent: {b}\n" for b in BOTS) + "Allow: /\n\nUser-agent: *\nAllow: /\n\n" + f"Sitemap: {site}sitemap.xml\n")
+urls = [U()] + [U(p['slug']) for p in C.PAGES] + [U('about'), U('privacy'), U('terms')]
 (pub / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + ''.join(f'  <url><loc>{u}</loc><lastmod>{C.LAST_UPDATED}</lastmod></url>\n' for u in urls) + '</urlset>\n')
 strip = lambda t: re.sub("<[^>]+>", "", t)
 (pub / 'llms.txt').write_text(f"""# MoveMyTodo
 
-> MoveMyTodo is a browser-based tool for people leaving Microsoft To Do, which Microsoft retires on June 30, 2027. It signs in to Microsoft with read-only access, shows every list and task, downloads a free backup (CSV, Markdown, JSON, printable page) and moves lists, steps, notes and due dates to Google Tasks, Apple Reminders (Mac import script), Things 3 or Todoist (CSV). Tasks are processed in the browser and never stored on its servers. Backup is free; moving more than {C.FREE_N} tasks costs ${C.PRICE} once. Not affiliated with Microsoft.
+> MoveMyTodo is an open-source browser tool for people leaving Microsoft To Do, which Microsoft retires on June 30, 2027. It signs in to Microsoft with read-only access, shows every list and task, downloads a free backup (CSV, Markdown, JSON, printable page) and moves lists, steps, notes and due dates to Google Tasks, Apple Reminders (Mac import script) or Things 3. Tasks are processed in the browser and never stored on its servers. Scanning and the backup are free; moving up to {C.FREE_N} tasks from one list is free; MoveMyTodo Pro moves everything for ${C.PRICE} once.{(" " + C.GOOGLE_NOTE) if C.GOOGLE_REVIEW else ""} Todoist and TickTick have their own free Microsoft To Do importers, which MoveMyTodo recommends for those apps. Made by {C.MAKER} (YanSquared). Not affiliated with Microsoft.
 
 ## Microsoft To Do retirement: key facts (checked {C.CHECKED})
 """ + '\n'.join(f'- {strip(x)}: {strip(y)}' for x, y in C.FACTS_ROWS) + f"""
+- Source: {C.MS_SOURCE}
 
-## What moves where
-""" + '\n'.join(f'- {r[0]}: ' + '; '.join(f'{C.COMPARE_HEAD[i + 1]}: {strip(v[2:] if v[:2] in ("y:", "n:") else v)}' for i, v in enumerate(r[1:])) for r in C.COMPARE_ROWS) + f"""
+## What moves where with MoveMyTodo
+""" + '\n'.join(f'- {r[0]}: ' + '; '.join(f'{C.COMPARE_HEAD[i + 1]}: {strip(v[2:] if v[:2] in ("y:", "n:") else v)}' for i, v in enumerate(r[1:])) for r in C.COMPARE_ROWS) + """
 
+## Questions and answers
+""" + ''.join(f"### {q}\n{strip(ans)}\n\n" for q, ans in C.QA.values()) + """## Updates
+""" + ''.join(f"- {d}: {strip(t)}\n" for d, t in C.CHANGELOG) + f"""
 ## Pages
-- [Tool: move Microsoft To Do to Google Tasks or Apple Reminders]({U()})
-""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}): {p['description']}\n" for p in C.PAGES) + f"""- [Privacy policy]({U('privacy')})
+- [MoveMyTodo tool: move or back up Microsoft To Do]({U()})
+""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}): {p['description']}\n" for p in C.PAGES) + f"""- [About MoveMyTodo]({U('about')}): who makes it, how data is handled, how facts are checked
+- [Privacy policy]({U('privacy')})
 - [Terms and refunds]({U('terms')})
+- [Source code]({C.GITHUB})
 
 Last updated: {C.LAST_UPDATED}. Contact: {C.EMAIL}
 """)

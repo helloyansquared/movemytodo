@@ -1,6 +1,6 @@
 # MoveMyTodo
 
-> MoveMyTodo is a browser-based tool for people leaving Microsoft To Do, which Microsoft retires on June 30, 2027. It signs in to Microsoft with read-only access, shows every list and task, downloads a free backup (CSV, Markdown, JSON, printable page) and moves lists, steps, notes and due dates to Google Tasks, Apple Reminders (Mac import script), Things 3 or Todoist (CSV). Tasks are processed in the browser and never stored on its servers. Backup is free; moving more than 25 tasks costs $6.99 once. Not affiliated with Microsoft.
+> MoveMyTodo is an open-source browser tool for people leaving Microsoft To Do, which Microsoft retires on June 30, 2027. It signs in to Microsoft with read-only access, shows every list and task, downloads a free backup (CSV, Markdown, JSON, printable page) and moves lists, steps, notes and due dates to Google Tasks, Apple Reminders (Mac import script) or Things 3. Tasks are processed in the browser and never stored on its servers. Scanning and the backup are free; moving up to 25 tasks from one list is free; MoveMyTodo Pro moves everything for $6.99 once. Google Tasks is part of MoveMyTodo Pro while Google reviews the app, because Google limits unverified apps to 100 users. Todoist and TickTick have their own free Microsoft To Do importers, which MoveMyTodo recommends for those apps. Made by Yan (YanSquared). Not affiliated with Microsoft.
 
 ## Microsoft To Do retirement: key facts (checked 26 November 2026)
 - Announced: November 18, 2026, in a Microsoft Planner blog post and the To Do transition guide.
@@ -9,9 +9,10 @@
 - Work or school accounts: Moved to Planner (“My tasks” is being redesigned from December 2026). Existing To Do tasks and lists are not migrated into it; they stay visible in Planner until June 30, 2027.
 - Microsoft's export: Promised before the shutdown, but not available as of 26 November 2026. Microsoft hasn't said what format it will use, and says an export doesn't mean another app can import it.
 - Your data: Retiring the apps doesn't by itself schedule your task data for deletion, but there will be no app to see it in.
-- What reads To Do today: Microsoft Graph, the official API that apps like MoveMyTodo use with your permission. It will also be retired later; no date yet.
+- What reads To Do today: Microsoft Graph, the official API that apps like MoveMyTodo use with your permission. Microsoft says the To Do service, APIs and sync retire later, on dates it hasn't announced.
+- Source: https://support.microsoft.com/en-us/planner/to-do-to-planner
 
-## What moves where
+## What moves where with MoveMyTodo
 - Lists: Google Tasks: New list each; Apple Reminders (Mac): New list each; Things 3: Project each; Free CSV / Markdown: Column / heading
 - Steps: Google Tasks: Subtasks; Apple Reminders (Mac): Checklist in notes; Things 3: Checklist items; Free CSV / Markdown: Kept
 - Notes and links: Google Tasks: Kept; Apple Reminders (Mac): Kept; Things 3: Kept; Free CSV / Markdown: Kept
@@ -22,15 +23,79 @@
 - Completed tasks: Google Tasks: Marked done; Apple Reminders (Mac): Marked done; Things 3: Logged; Free CSV / Markdown: Kept with date
 - File attachments: Google Tasks: Not moved; Apple Reminders (Mac): Not moved; Things 3: Not moved; Free CSV / Markdown: Listed only
 
+## Questions and answers
+### When is Microsoft To Do shutting down?
+Microsoft To Do stops working on June 30, 2027, on the web, Windows, Mac, iPhone and Android. Microsoft announced it on November 18, 2026. Personal accounts get no replacement; work and school accounts are pointed to Planner.
+
+### Will my To Do tasks move to Planner or another app automatically?
+No. Microsoft says existing To Do tasks and lists will not migrate to Planner, and personal accounts can't use Planner at all. You have to export or move them yourself before June 30, 2027.
+
+### How do I export Microsoft To Do?
+Sign in to MoveMyTodo with your Microsoft account and download a free backup as CSV (opens in Excel and Google Sheets), Markdown, JSON or a printable page. Microsoft's own export isn't available yet as of 26 November 2026.
+
+### Can I move Microsoft To Do to Google Tasks?
+Yes. MoveMyTodo signs in to Google Tasks with your permission and creates a list for each To Do list, with steps as subtasks, notes, due dates and completed tasks. Google Tasks has no import button of its own. Until Google finishes reviewing MoveMyTodo, Google shows an extra “Google hasn't verified this app” screen first; choose Advanced there to continue.
+
+### Can I move Microsoft To Do to Apple Reminders?
+Yes, on a Mac: MoveMyTodo makes an import file that adds a Reminders list for each To Do list, with notes, due dates, reminder times and flags, and iCloud syncs it to your iPhone. Without a Mac, see the free iPhone method in our Apple Reminders guide.
+
+### Is it safe to sign in? What can MoveMyTodo see?
+MoveMyTodo asks Microsoft for read-only access to your tasks, so it cannot change or delete anything in To Do. Your tasks are read straight into your browser tab and are never sent to or stored on our servers. Close the tab and they're gone.
+
+### Is MoveMyTodo free?
+Scanning, the full backup (CSV, Markdown, JSON, printable) and Todoist files are free with no limits. Moving to Apple Reminders or Things is free for up to 25 tasks from one list; MoveMyTodo Pro moves everything, including to Google Tasks, for $6.99 once. Google Tasks is part of MoveMyTodo Pro while Google reviews the app, because Google limits unverified apps to 100 users.
+
+### Does it work with a work or school account?
+Often, but not always. Some organisations only let you sign in to apps an admin has approved; if you see an admin-approval message, ask your IT team or use the free backup another way. Personal Microsoft accounts work straight away.
+
+### What happens to repeating tasks and reminders?
+Due dates move everywhere. Google Tasks, Apple Reminders and Things can't receive a repeat rule through an import, so MoveMyTodo writes it into the task's notes, for example “Repeats: Every month on day 1”, and you set it again in the new app.
+
+### What about Todoist or TickTick?
+Both have their own free Microsoft To Do importers, so you don't need MoveMyTodo to get there. Todoist's importer (launched November 21, 2026, free on every plan) copies the lists you choose with due dates, reminders and steps; TickTick's is in its web app under Settings → Integrations & Import. MoveMyTodo is for the apps without an importer: Google Tasks, Apple Reminders and Things 3. Either way, download the free backup first so you keep a copy you control.
+
+### Can I move Microsoft To Do to Things 3?
+Yes. Things 3 has no Microsoft To Do importer, but MoveMyTodo turns each To Do list into a Things project through Things' own link feature: steps become checklist items, due dates become deadlines and categories become tags. Open MoveMyTodo on the Mac, iPhone or iPad where Things is installed and tap the buttons it makes.
+
+### What's the best Microsoft To Do alternative?
+It depends on what you need and how much moving you want to do. Todoist and TickTick have their own free importers; Superlist keeps a live sync with To Do; Google Tasks, Apple Reminders and Things 3 are simpler or Apple-only apps without an importer, which is where MoveMyTodo helps. Work and school accounts are pointed to Planner, but tasks aren't copied into it.
+
+### Will moving delete anything from To Do?
+No. MoveMyTodo only reads To Do, and in the new app it only adds new lists, never changing or deleting the lists you already have there.
+
+### Can I import Microsoft To Do into Planner?
+No. Microsoft says existing To Do tasks and lists will not migrate to Planner, and it hasn't published an import. Work and school accounts can still see old To Do tasks in Planner until June 30, 2027. To keep them after that, download a backup (CSV, Markdown or JSON) and recreate the tasks you still need in Planner. MoveMyTodo can't write to Planner.
+
+### Can I still see my To Do tasks in Planner?
+Yes, until June 30, 2027, for work and school accounts. Microsoft says you can view and manage existing To Do tasks in Planner until then, but not after. Personal Microsoft accounts can't use Planner at all.
+
+### Does Todoist's Microsoft To Do importer work on the free plan?
+Yes. Todoist says its importer works on every plan, including the free Beginner plan. Each To Do list becomes a Todoist project, and the Beginner plan allows 5 active personal projects, so pick up to 5 lists, merge small ones first, or upgrade. Every Todoist plan allows 300 active tasks per project.
+
+### Do repeating tasks and reminders move to Todoist?
+Mostly. Todoist's importer copies due dates, reminders and steps; a repeating task whose schedule Todoist can't match arrives as a one-time task, and reminders or files over your plan's limits are skipped. Todoist emails a summary of what changed.
+
+### What if I wait until after June 30, 2027?
+The apps will be gone, and Microsoft hasn't promised how long the export or API will keep working after that. Back up now; it takes a minute and costs nothing.
+
+## Updates
+- 2026-11-26: Checked Microsoft's support page again: Microsoft's export tool is still not available. Added guides for Planner and Todoist.
+- 2026-11-21: Todoist launched a free Microsoft To Do importer that works on every Todoist plan.
+- 2026-11-18: Microsoft announced that the To Do apps retire on June 30, 2027.
+
 ## Pages
-- [Tool: move Microsoft To Do to Google Tasks or Apple Reminders](https://movemytodo.com/)
+- [MoveMyTodo tool: move or back up Microsoft To Do](https://movemytodo.com/)
 - [How to move Microsoft To Do to Google Tasks](https://movemytodo.com/microsoft-to-do-to-google-tasks/): Google Tasks has no import button. Move every Microsoft To Do list to Google Tasks with steps as subtasks, notes and due dates, in about two minutes.
 - [How to move Microsoft To Do to Apple Reminders](https://movemytodo.com/microsoft-to-do-to-apple-reminders/): Move Microsoft To Do lists into Apple Reminders with notes, due dates and reminder times. A one-command Mac import, plus a free method for iPhone.
 - [How to export Microsoft To Do (free)](https://movemytodo.com/export-microsoft-to-do/): Microsoft To Do has no export button and Microsoft's promised export isn't out yet. Download every list, step and due date as CSV, Markdown, JSON or a printable page.
 - [Microsoft To Do is shutting down: what to do now](https://movemytodo.com/microsoft-to-do-shutting-down/): Microsoft To Do retires June 30, 2027 and nothing migrates automatically. Key dates, what happens to your tasks, and how to back up and move them.
 - [How to move Microsoft To Do to Things 3](https://movemytodo.com/microsoft-to-do-to-things-3/): Things 3 can't import Microsoft To Do. Move each To Do list into a Things project with steps as checklist items, due dates as deadlines and notes intact, on Mac, iPhone or iPad.
 - [Microsoft To Do alternatives, compared by how your tasks get there](https://movemytodo.com/microsoft-to-do-alternatives/): Microsoft To Do retires June 30, 2027. Compare Todoist, TickTick, Superlist, Google Tasks, Apple Reminders, Things 3 and Planner by how your existing lists get there.
+- [Microsoft To Do to Planner: what moves and what doesn't](https://movemytodo.com/microsoft-to-do-to-planner/): Microsoft points work and school To Do users to Planner, but existing tasks don't migrate. What Planner shows until June 30, 2027, what's missing, and how to keep your lists.
+- [How to move Microsoft To Do to Todoist](https://movemytodo.com/microsoft-to-do-to-todoist/): Todoist has a free Microsoft To Do importer on every plan. Step by step, what carries over, the 5-project limit on the free plan, and what to do if the importer doesn't fit.
+- [About MoveMyTodo](https://movemytodo.com/about/): who makes it, how data is handled, how facts are checked
 - [Privacy policy](https://movemytodo.com/privacy/)
 - [Terms and refunds](https://movemytodo.com/terms/)
+- [Source code](https://github.com/helloyansquared/movemytodo)
 
 Last updated: 2026-11-26. Contact: hello@yansquared.com
