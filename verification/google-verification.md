@@ -21,12 +21,14 @@ Everything runs in the user's browser. The token and data stay in the tab's memo
 
 ## Additional information for reviewers (paste into the notes field)
 
+Demo video: recorded on the live domain as a sequence of unedited full-screen screenshots, on the test route https://movemytodo.com/?review-demo. That route uses the same OAuth client ID and the same single scope (https://www.googleapis.com/auth/tasks) as production; the only differences are sample To Do data instead of a Microsoft sign-in, and a same-tab Google sign-in (redirect URI https://movemytodo.com/) instead of the Google Identity Services pop-up, so the full client ID is visible in the address bar. The Google account in the video belongs to the project owner's Google Workspace organization, so Google did not show the unverified-app screen for it.
+
 How to test without a Microsoft account or payment:
-1. Open https://movemytodo.com/ and click "Try with sample data" (top of the page). This loads sample To Do lists.
+1. Open https://movemytodo.com/?review-demo (or https://movemytodo.com/ for the production pop-up flow) and click "Try with sample data".
 2. Scroll to "Move everything with Pro", paste the reviewer license key REVIEW_KEY_HERE into "Already bought? Paste your license key" and click Activate. (Google Tasks is a paid destination, $6.99 one-time; this key unlocks it for review.)
-3. Open the Google Tasks tab and click "Connect Google Tasks & move", then sign in and allow access.
+3. Open the Google Tasks tab, click "Connect Google Tasks & move", sign in and allow access.
 4. Check https://tasks.google.com/ for the new lists.
-The only server request MoveMyTodo makes is this license-key check with our payment provider (Dodo Payments); it contains no Google user data.
+The only server request MoveMyTodo makes is the license-key check with our payment provider (Dodo Payments); it contains no Google user data.
 
 ## Demo video script (English UI, 1–2 minutes, upload to YouTube as Unlisted)
 
