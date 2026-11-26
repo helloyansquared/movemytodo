@@ -8,6 +8,9 @@ EMAIL = "hello@yansquared.com"
 GITHUB = "https://github.com/helloyansquared/movemytodo"
 PRICE = "6.99"
 FREE_N = 25
+# True until Google approves the Tasks scope: Google shows an "unverified app" page and Google Tasks is Pro-only.
+# Flip together with GOOGLE_REVIEW in src/index.html.
+GOOGLE_REVIEW = True
 
 DEFINITION = ("Microsoft is retiring the Microsoft To Do apps on June 30, 2027, on the web, Windows, Mac, iPhone and Android. "
               "Your lists don't move anywhere by themselves: personal accounts get no replacement app, and work or school accounts "
@@ -58,13 +61,14 @@ QA = {
     "export": ("How do I export Microsoft To Do?",
                f"Sign in to MoveMyTodo with your Microsoft account and download a free backup as CSV (opens in Excel and Google Sheets), Markdown, JSON or a printable page. Microsoft's own export isn't available yet as of {CHECKED}."),
     "google": ("Can I move Microsoft To Do to Google Tasks?",
-               "Yes. MoveMyTodo signs in to Google Tasks with your permission and creates a list for each To Do list, with steps as subtasks, notes, due dates and completed tasks. Google Tasks has no import button of its own."),
+               "Yes. MoveMyTodo signs in to Google Tasks with your permission and creates a list for each To Do list, with steps as subtasks, notes, due dates and completed tasks. Google Tasks has no import button of its own." + (" Until Google finishes verifying MoveMyTodo, Google shows a “Google hasn't verified this app” page first: click Advanced, then Go to movemytodo.com." if GOOGLE_REVIEW else "")),
     "apple": ("Can I move Microsoft To Do to Apple Reminders?",
               "Yes, on a Mac: MoveMyTodo makes an import file that adds a Reminders list for each To Do list, with notes, due dates, reminder times and flags, and iCloud syncs it to your iPhone. Without a Mac, see the free iPhone method in our Apple Reminders guide."),
     "safe": ("Is it safe to sign in? What can MoveMyTodo see?",
              "MoveMyTodo asks Microsoft for read-only access to your tasks, so it cannot change or delete anything in To Do. Your tasks are read straight into your browser tab and are never sent to or stored on our servers. Close the tab and they're gone."),
     "cost": ("Is MoveMyTodo free?",
-             f"Scanning and the full backup (CSV, Markdown, JSON, printable) are free with no limits. Moving to Google Tasks, Apple Reminders or Things is free for up to {FREE_N} tasks from one list; MoveMyTodo Pro moves everything for ${PRICE} once."),
+             (f"Scanning, the full backup (CSV, Markdown, JSON, printable) and Todoist files are free with no limits. Moving to Apple Reminders or Things is free for up to {FREE_N} tasks from one list; MoveMyTodo Pro moves everything, including to Google Tasks, for ${PRICE} once. (Google Tasks is Pro-only while Google verifies MoveMyTodo, because Google caps unverified apps at 100 users.)" if GOOGLE_REVIEW else
+              f"Scanning and the full backup (CSV, Markdown, JSON, printable) are free with no limits. Moving to Google Tasks, Apple Reminders or Things is free for up to {FREE_N} tasks from one list; MoveMyTodo Pro moves everything for ${PRICE} once.")),
     "work": ("Does it work with a work or school account?",
              "Often, but not always. Some organisations only let you sign in to apps an admin has approved; if you see an admin-approval message, ask your IT team or use the free backup another way. Personal Microsoft accounts work straight away."),
     "repeat": ("What happens to repeating tasks and reminders?",
@@ -94,7 +98,7 @@ PAGES = [
 <li>On <a href="/#app">MoveMyTodo</a>, click <b>Sign in with Microsoft</b> and use the account you use for To Do. Microsoft asks you to allow <i>read</i> access to your tasks.</li>
 <li>Check the numbers (lists, tasks, steps) and untick any lists you don't want. Download the free CSV backup while you're there.</li>
 <li>In <b>Move to your new app</b>, choose <b>Google Tasks</b> and click <b>Connect Google Tasks &amp; move</b>.</li>
-<li>Pick your Google account and allow access to Google Tasks. The lists appear in Google Tasks as they're written; a big account takes a few minutes.</li>
+<li>Pick your Google account and allow access to Google Tasks. """ + ("""While Google is still verifying MoveMyTodo, it first shows a page saying “Google hasn't verified this app”: click <b>Advanced</b>, then <b>Go to movemytodo.com (unsafe)</b>. """ if GOOGLE_REVIEW else "") + """The lists appear in Google Tasks as they're written; a big account takes a few minutes.</li>
 <li>Open <a href="https://tasks.google.com/">tasks.google.com</a>, Gmail's side panel or the Google Tasks app to check them.</li>
 </ol>
 <h2>What carries over</h2>

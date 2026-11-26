@@ -87,6 +87,8 @@ h2{font-size:clamp(34px,4.6vw,52px);text-transform:uppercase;margin-bottom:12px}
 .keeps{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px;margin:12px 0;padding:0;list-style:none;font-size:15px}
 @media(max-width:640px){.keeps{grid-template-columns:1fr}}
 .keeps li::before{content:"✓ ";color:var(--green);font-weight:700}.keeps li.no::before{content:"– ";color:var(--soft)}.keeps li.no{color:var(--soft)}
+.note{background:#fff;border:2px solid var(--ink);border-left:8px solid var(--tape);border-radius:10px;padding:4px 16px;font-size:15.5px;margin:14px 0}.note p{margin:10px 0}
+.gDone{display:none}.no-review .gReview{display:none}.no-review .gDone{display:inline}
 .free{background:#fff6d6;border:1.5px dashed var(--tape2);border-radius:10px;padding:12px 14px;font-size:15.5px;margin:14px 0}
 .free select{font:inherit;padding:6px 8px;border-radius:6px;border:1.5px solid var(--ink);max-width:100%}
 pre.cmd{background:#1f2a44;color:#f6f0de;border-radius:10px;padding:14px;overflow:auto;font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:10px 0}
@@ -190,7 +192,7 @@ footer{background:var(--ink);color:#c9d0e4;font-size:14.5px;padding:30px 0}foote
       <div class="kicker">Step 3</div>
       <h2>Move to your new app</h2>
       <div class="free" id="freeBox">
-        <b>Try it free:</b> move up to <span class="FREE_N"></span> tasks from one list.
+        <b>Try it free:</b> move up to <span class="FREE_N"></span> tasks from one list<span class="gReview"> to Apple Reminders or Things 3</span>.
         <label for="freeList" class="sr">List for the free move</label> <select id="freeList"></select>
         <span id="freeNote"></span>
       </div>
@@ -206,6 +208,11 @@ footer{background:var(--ink);color:#c9d0e4;font-size:14.5px;padding:30px 0}foote
         <h3>To Google Tasks</h3>
         <p style="margin:0">Creates a new Google Tasks list for each To Do list and adds your tasks in the same order. Works on Android, iPhone, Gmail and Google Calendar.</p>
         <ul class="keeps"><li>Lists</li><li>Steps → subtasks</li><li>Notes and links</li><li>Due dates</li><li>Completed tasks (marked done)</li><li class="no">Repeat rules and reminder times are written into the notes (Google's API can't set them)</li></ul>
+        <div class="note gReview" id="gNote">
+          <p><b>Before you connect: Google will show a warning.</b> MoveMyTodo hasn't finished Google's app verification yet, so Google first shows a page saying <i>“Google hasn't verified this app”</i>. To continue, click <b>Advanced</b>, then <b>Go to movemytodo.com (unsafe)</b>, then allow access to Google Tasks.</p>
+          <p>We ask for Google Tasks only (not Gmail, Drive or anything else). Your tasks go straight from this tab to Google; we never receive or store them. <a href="/privacy/#google">How we use Google data</a>.</p>
+          <p id="gProOnly">Until Google finishes verifying MoveMyTodo, moving to Google Tasks is part of Pro, because Google allows unverified apps only 100 users in total. The free move works for <a href="#t-apple" data-tab="tab-apple">Apple Reminders</a> and <a href="#t-things" data-tab="tab-things">Things 3</a>, and <a href="#t-other" data-tab="tab-other">Todoist files</a> are always free.</p>
+        </div>
         <div class="row"><button class="btn" id="goGoogle" type="button">Connect Google Tasks &amp; move</button></div>
         <p class="status" id="gStatus" role="status" aria-live="polite"></p>
         <div class="bar2" id="gProgress" hidden><i></i></div>
@@ -245,6 +252,7 @@ footer{background:var(--ink);color:#c9d0e4;font-size:14.5px;padding:30px 0}foote
         <div>
           <h3>Move everything with Pro</h3>
           <p>All your lists, every task, steps, notes, dates and completed history, to Google Tasks, Apple Reminders and Things. One payment, no subscription.</p>
+          <p class="gReview" style="font-size:15px">Moving to Google Tasks? Google is still verifying MoveMyTodo, so it shows a <i>“Google hasn't verified this app”</i> page before you can allow access (click Advanced → Go to movemytodo.com). Apple Reminders and Things 3 show no such page.</p>
           <small>Secure checkout by Dodo Payments opens in a new tab; this tab unlocks by itself when you've paid. Tax included. If it doesn't work for your account, email us within 14 days for a refund.</small>
           <div class="keyrow"><label for="key" class="sr">License key</label><input type="text" id="key" placeholder="Already bought? Paste your license key" autocomplete="off"><button class="btn tape small" id="keyGo" type="button">Activate</button></div>
           <div id="keyMsg" role="status" aria-live="polite"></div>
@@ -283,7 +291,7 @@ footer{background:var(--ink);color:#c9d0e4;font-size:14.5px;padding:30px 0}foote
   <div class="kicker">Pricing</div>
   <h2>Free backup. One price to move.</h2>
   <div class="pricing">
-    <div><span>Free</span><b>$0</b><ul><li>Scan every list and task</li><li>Full backup: CSV, Markdown, JSON, printable page</li><li>Move up to <span class="FREE_N"></span> tasks from one list to any app</li></ul></div>
+    <div><span>Free</span><b>$0</b><ul><li>Scan every list and task</li><li>Full backup: CSV, Markdown, JSON, printable page</li><li>Move up to <span class="FREE_N"></span> tasks from one list<span class="gReview"> to Apple Reminders or Things 3</span><span class="gDone"> to any app</span></li><li>Todoist CSV files</li></ul></div>
     <div class="hi"><span>Pro · one-time</span><b>$<span class="PRICE"></span></b><ul><li>Move all lists and tasks</li><li>Google Tasks, Apple Reminders and Things 3</li><li>Steps, notes, due dates and completed history</li><li>Use it on 3 devices · no subscription</li><li>License key emailed to you · 14-day refund</li></ul></div>
   </div>
 </div></section>
@@ -313,6 +321,11 @@ const GOOGLE_CLIENT_ID = "__GOOGLE_CLIENT_ID__";
 const PRODUCT_ID = "__PRODUCT_ID__";
 const PRICE = "6.99";
 const FREE_N = 25;
+// Until Google approves the Tasks scope (sensitive-scope verification), Google shows an
+// "unverified app" page and caps the app at 100 users ever, so Google Tasks is Pro-only.
+// After approval: set GOOGLE_REVIEW = false (also GOOGLE_REVIEW in src/content.py) and redeploy.
+const GOOGLE_REVIEW = true;
+if (!GOOGLE_REVIEW) document.documentElement.classList.add("no-review");
 const $ = id => document.getElementById(id);
 document.querySelectorAll(".PRICE").forEach(e => e.textContent = PRICE);
 document.querySelectorAll(".FREE_N").forEach(e => e.textContent = FREE_N);
@@ -324,7 +337,7 @@ const NO_SHOP = PRODUCT_ID.startsWith("__");
 let PRO = NO_SHOP || !!store.get();
 const BUY_URL = NO_SHOP ? "" : `https://checkout.dodopayments.com/buy/${PRODUCT_ID}?quantity=1&redirect_url=${encodeURIComponent(SITE + "?unlock=1")}`;
 $("buy").href = BUY_URL || "#";
-function setPro(v) { PRO = v; $("pay").hidden = v; $("freeBox").hidden = v; $("proBox").hidden = !v; }
+function setPro(v) { PRO = v; $("pay").hidden = v; $("freeBox").hidden = v; $("proBox").hidden = !v; $("gProOnly").hidden = v; $("goGoogle").textContent = GOOGLE_REVIEW && !v ? "Move to Google Tasks with Pro" : "Connect Google Tasks & move"; }
 async function activate(key, where) {
   where.textContent = "Checking your key…"; where.className = "";
   try {
@@ -517,6 +530,7 @@ document.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => {
 // ── Tabs ─────────────────────────────────────────────────────────────────────
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 tabs.forEach(t => t.onclick = () => { tabs.forEach(x => { x.setAttribute("aria-selected", x === t); $(x.getAttribute("aria-controls")).hidden = x !== t; }); });
+document.querySelectorAll("[data-tab]").forEach(a => a.onclick = e => { e.preventDefault(); $(a.dataset.tab).click(); $(a.dataset.tab).scrollIntoView({ block: "center", behavior: "smooth" }); });
 
 function freeNotice(m) { return !PRO && m.partial ? ` (free: first ${FREE_N} tasks of this list)` : ""; }
 
@@ -575,6 +589,10 @@ async function gt(path, token, method, body) {
 $("goGoogle").onclick = async () => {
   const m = forMove(); if (!m.stats.tasks) { alert("Nothing selected to move."); return; }
   if (GOOGLE_CLIENT_ID.startsWith("__")) { status("Google Tasks isn't connected on this copy yet.", "err", $("gStatus")); return; }
+  if (GOOGLE_REVIEW && !PRO) {
+    status(`Google Tasks is part of Pro until Google finishes verifying MoveMyTodo. Unlock Pro below ($${PRICE}, 14-day refund), or move ${FREE_N} tasks free to Apple Reminders or Things 3.`, "err", $("gStatus"));
+    $("pay").scrollIntoView({ block: "center", behavior: "smooth" }); return;
+  }
   const btn = $("goGoogle"); btn.disabled = true; $("gLog").innerHTML = "";
   const log = t => { const d = document.createElement("div"); d.textContent = t; $("gLog").prepend(d); };
   try {
