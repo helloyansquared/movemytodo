@@ -2,7 +2,7 @@
 // Activates or validates a MoveMyTodo Pro license key with Dodo Payments' public licence endpoints
 // (no API key involved). Only keys issued for our product are accepted, and the customer's
 // details in Dodo's answer are not passed on to the browser.
-const PRODUCT_ID = "__PRODUCT_ID__";
+const PRODUCT_ID = "pdt_0NskgwvLberpsSzV9p3sj";
 const DODO = "https://live.dodopayments.com/licenses/";
 
 const json = (body, status = 200) =>
