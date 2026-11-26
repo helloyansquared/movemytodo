@@ -432,8 +432,11 @@ async function scan(token, account) {
       }
     }
     await Promise.all([worker(), worker(), worker()]);
-    show(CORE.buildModel(results, account));
-    status(`Done. ${account && account.email ? "Signed in as " + account.email + ". " : ""}Your tasks are only in this tab; close it and they're gone.`, "ok");
+    const m = CORE.buildModel(results, account);
+    show(m);
+    const who = account && account.email ? account.email : "this Microsoft account";
+    if (!m.stats.tasks) status(`Signed in as ${who}, but its To Do lists are empty. If you keep your tasks in another Microsoft account (for example a work one, or another outlook.com address), click “Sign in with Microsoft” again and pick that account.`, "err");
+    else status(`Done. Signed in as ${who}. Your tasks are only in this tab; close it and they're gone.`, "ok");
   } catch (e) {
     status(e.status === 401 || e.status === 403 ? "Microsoft refused access to To Do for this account (" + (e.code || e.status) + "). If it's a work or school account, your admin may have blocked To Do access." : "Couldn't read your tasks: " + e.message, "err");
   } finally { setTimeout(() => progress(null), 600); }
