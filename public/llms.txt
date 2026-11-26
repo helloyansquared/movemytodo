@@ -28,6 +28,8 @@
 - [How to move Microsoft To Do to Apple Reminders](https://movemytodo.com/microsoft-to-do-to-apple-reminders/): Move Microsoft To Do lists into Apple Reminders with notes, due dates and reminder times. A one-command Mac import, plus a free method for iPhone.
 - [How to export Microsoft To Do (free)](https://movemytodo.com/export-microsoft-to-do/): Microsoft To Do has no export button and Microsoft's promised export isn't out yet. Download every list, step and due date as CSV, Markdown, JSON or a printable page.
 - [Microsoft To Do is shutting down: what to do now](https://movemytodo.com/microsoft-to-do-shutting-down/): Microsoft To Do retires June 30, 2027 and nothing migrates automatically. Key dates, what happens to your tasks, and how to back up and move them.
+- [How to move Microsoft To Do to Things 3](https://movemytodo.com/microsoft-to-do-to-things-3/): Things 3 can't import Microsoft To Do. Move each To Do list into a Things project with steps as checklist items, due dates as deadlines and notes intact, on Mac, iPhone or iPad.
+- [Microsoft To Do alternatives, compared by how your tasks get there](https://movemytodo.com/microsoft-to-do-alternatives/): Microsoft To Do retires June 30, 2027. Compare Todoist, TickTick, Superlist, Google Tasks, Apple Reminders, Things 3 and Planner by how your existing lists get there.
 - [Privacy policy](https://movemytodo.com/privacy/)
 - [Terms and refunds](https://movemytodo.com/terms/)
 

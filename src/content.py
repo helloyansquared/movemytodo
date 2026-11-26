@@ -74,7 +74,11 @@ QA = {
     "repeat": ("What happens to repeating tasks and reminders?",
                "Due dates move everywhere. Google Tasks, Apple Reminders and Things can't receive a repeat rule through an import, so MoveMyTodo writes it into the task's notes, for example “Repeats: Every month on day 1”, and you set it again in the new app."),
     "todoist": ("What about Todoist or TickTick?",
-                "TickTick has its own Microsoft To Do importer in its web app (Settings → Integrations & Import). For Todoist, MoveMyTodo makes free Todoist CSV files, one per list, that you import into a project. Either way, download the free backup first so you keep a copy you control."),
+                "Both have their own free Microsoft To Do importers, so you don't need MoveMyTodo to get there. Todoist's importer (launched November 21, 2026) copies the lists you choose with due dates, notes and steps; TickTick's is in its web app under Settings → Integrations & Import. MoveMyTodo is for the apps without an importer: Google Tasks, Apple Reminders and Things 3. Either way, download the free backup first so you keep a copy you control."),
+    "things": ("Can I move Microsoft To Do to Things 3?",
+               "Yes. Things 3 has no Microsoft To Do importer, but MoveMyTodo turns each To Do list into a Things project through Things' own link feature: steps become checklist items, due dates become deadlines and categories become tags. Open MoveMyTodo on the Mac, iPhone or iPad where Things is installed and tap the buttons it makes."),
+    "best": ("What's the best Microsoft To Do alternative?",
+             "It depends on what you need and how much moving you want to do. Todoist and TickTick have their own free importers; Superlist keeps a live sync with To Do; Google Tasks, Apple Reminders and Things 3 are simpler or Apple-only apps without an importer, which is where MoveMyTodo helps. Work and school accounts are pointed to Planner, but tasks aren't copied into it."),
     "deleted": ("Will moving delete anything from To Do?",
                 "No. MoveMyTodo only reads To Do, and in the new app it only adds new lists, never changing or deleting the lists you already have there."),
     "after": ("What if I wait until after June 30, 2027?",
@@ -187,6 +191,8 @@ PAGES = [
 <tr><th scope="row">Microsoft's own export</th><td>Not available yet</td><td>Waiting; format unknown</td></tr>
 <tr><th scope="row">Copy or print each list</th><td>Titles only</td><td>A handful of tasks</td></tr>
 </tbody></table>
+<h2 id="official-export">When Microsoft's own export arrives</h2>
+<p>Microsoft says it will offer a way to export To Do data before June 30, 2027, but it hasn't said when, what format it will use or what it includes (checked """ + CHECKED + """). It has also said an export doesn't mean another app can import it. When it ships, we'll test it and update this page with what it contains, and add a way to move that file to Google Tasks, Apple Reminders or Things 3. Until then, a backup you make today is the safe option.</p>
 """
   },
   {
@@ -205,12 +211,83 @@ PAGES = [
 <ol>
 <li><b>Back up today.</b> A <a href="/export-microsoft-to-do/">free export</a> takes a minute and protects you whatever happens to Microsoft's own export.</li>
 <li><b>Pick your new app.</b> Google Tasks if you live in Gmail or Android; Apple Reminders if you're on iPhone and Mac; Todoist or TickTick for more power. See <a href="/#compare">what moves to each</a>.</li>
-<li><b>Move your lists.</b> <a href="/microsoft-to-do-to-google-tasks/">To Google Tasks</a>, <a href="/microsoft-to-do-to-apple-reminders/">to Apple Reminders</a> or Things with MoveMyTodo; free Todoist CSV files are on the same page, and TickTick has its own importer.</li>
+<li><b>Move your lists.</b> <a href="/microsoft-to-do-to-google-tasks/">To Google Tasks</a>, <a href="/microsoft-to-do-to-apple-reminders/">to Apple Reminders</a> or <a href="/microsoft-to-do-to-things-3/">to Things 3</a> with MoveMyTodo. Todoist and TickTick have their own free importers; see <a href="/microsoft-to-do-alternatives/">where each app stands</a>.</li>
 <li><b>Set repeats and shared lists again.</b> Repeating tasks keep their rule in the notes; shared lists need re-sharing in the new app.</li>
 <li><b>Keep To Do until you're happy.</b> Nothing is deleted when you move; check the new app for a week, then stop using To Do.</li>
 </ol>
 <h2>Work and school accounts</h2>
 <p>Planner's new “My tasks” page starts rolling out in December 2026 and will hold new private tasks. Your old To Do tasks stay visible in Planner until June 30, 2027 but are not copied into it, so export anything you want to keep. If your organisation requires admin approval for apps, ask IT before using any third-party tool.</p>
+"""
+  },
+  {
+    "slug": "microsoft-to-do-to-things-3",
+    "crumb": "To Do → Things 3",
+    "title": "How to Move Microsoft To Do to Things 3 (Lists, Steps, Due Dates)",
+    "description": "Things 3 can't import Microsoft To Do. Move each To Do list into a Things project with steps as checklist items, due dates as deadlines and notes intact, on Mac, iPhone or iPad.",
+    "h1": "How to move Microsoft To Do to Things 3",
+    "answer": "Things 3 has no Microsoft To Do importer. MoveMyTodo reads your To Do lists (read-only) and hands them to Things through Things' own link feature, so each list becomes a Things project with its tasks, steps as checklist items, notes, due dates as deadlines, reminder times and categories as tags. It works on the Mac, iPhone or iPad where Things is installed.",
+    "faq": ["things", "repeat", "safe", "cost"],
+    "links": ["microsoft-to-do-alternatives", "microsoft-to-do-to-apple-reminders", "export-microsoft-to-do"],
+    "body": """
+<h2>Steps</h2>
+<ol>
+<li>On the device where Things is installed, open <a href="/#app">MoveMyTodo</a> and click <b>Sign in with Microsoft</b>. Allow read access to your tasks.</li>
+<li>Untick any lists you don't want and download the free backup while you're there.</li>
+<li>In <b>Move to your new app</b>, choose <b>Things 3</b> and click <b>Make my Things buttons</b>. You get one button per list (big lists are split into parts of 40 tasks).</li>
+<li>Tap the first button. Things opens and asks whether to enable Things URLs; choose <b>Enable</b>. The list arrives as a new project.</li>
+<li>Go back to the page and tap the next button. Wait for Things to finish each one before tapping the next.</li>
+</ol>
+<p>If nothing happens when you tap a button, check the setting in Things: on a Mac, <b>Things → Settings → General → Enable Things URLs</b>; on iPhone or iPad, <b>Settings → General → Things URLs</b>.</p>
+<h2>What moves</h2>
+<table class="facts"><caption>Microsoft To Do → Things 3</caption>
+<tr><th scope="row">Lists</th><td>A new Things project for each list. Nothing already in Things is changed.</td></tr>
+<tr><th scope="row">Steps</th><td>Checklist items inside the to-do, ticked or not.</td></tr>
+<tr><th scope="row">Due dates and reminders</th><td>Due date becomes the deadline; a reminder becomes “When” with the same time.</td></tr>
+<tr><th scope="row">Notes, links, categories</th><td>Notes and links are kept; categories become tags; Important becomes an “Important” tag.</td></tr>
+<tr><th scope="row">Completed tasks</th><td>Added as completed, so they go to the Logbook.</td></tr>
+<tr><th scope="row">Repeating tasks</th><td>The rule is written into the notes (for example “Repeats: Every week on Thu”); set it again in Things.</td></tr>
+<tr><th scope="row">File attachments</th><td>Not moved. Save them from To Do first.</td></tr>
+</table>
+<h2>The other route: through Apple Reminders</h2>
+<p>Things can import from Apple Reminders (on a Mac: <b>File → Import → Import From Reminders</b>), so another way is To Do → Reminders → Things. It works, but it's two hops, and Things doesn't import lists that sit inside Reminders groups, so drag those out first. Things' own help page explains the import. Moving straight from To Do keeps steps as checklists, which the Reminders route loses.</p>
+<h2>Before you start</h2>
+<ul>
+<li>Things is a paid app for Mac, iPhone and iPad and syncs through its own Things Cloud. You need it installed on the device you use for the move.</li>
+<li>You can try one list of up to 25 tasks for free. Moving all your lists is part of MoveMyTodo Pro.</li>
+<li>To Do keeps your tasks until you stop using it, so you can compare both apps for a while.</li>
+</ul>
+"""
+  },
+  {
+    "slug": "microsoft-to-do-alternatives",
+    "crumb": "To Do alternatives",
+    "title": "Microsoft To Do Alternatives: Where to Go and How Your Tasks Get There",
+    "description": "Microsoft To Do retires June 30, 2027. Compare Todoist, TickTick, Superlist, Google Tasks, Apple Reminders, Things 3 and Planner by how your existing lists get there.",
+    "h1": "Microsoft To Do alternatives, compared by how your tasks get there",
+    "answer": "Every to-do app can replace Microsoft To Do; the hard part is bringing years of lists with you. Todoist and TickTick have free To Do importers and Superlist can sync with To Do, while Google Tasks, Apple Reminders and Things 3 have no importer, which is the gap MoveMyTodo fills. Work and school accounts are pointed to Planner, but existing tasks aren't copied into it.",
+    "faq": ["best", "migrate", "todoist", "after"],
+    "links": ["microsoft-to-do-shutting-down", "microsoft-to-do-to-google-tasks", "microsoft-to-do-to-things-3"],
+    "body": """
+<h2>How your lists get to each app</h2>
+<div style="overflow-x:auto"><table class="cmp"><thead><tr><th scope="col">App</th><th scope="col">How To Do lists get there</th><th scope="col">Good fit if you</th></tr></thead><tbody>
+<tr><th scope="row">Todoist</th><td>Its own free importer (since November 21, 2026): pick lists, and due dates, notes and steps come along.</td><td>Want natural-language dates, filters and apps everywhere.</td></tr>
+<tr><th scope="row">TickTick</th><td>Its own importer in the web app: Settings → Integrations &amp; Import → Microsoft To Do.</td><td>Want a calendar view, habits and a timer in one app.</td></tr>
+<tr><th scope="row">Superlist</th><td>A live two-way sync with To Do for the lists you choose (titles, completion and due dates).</td><td>Liked Wunderlist; it's made by Wunderlist's original team.</td></tr>
+<tr><th scope="row">Google Tasks</th><td>No importer. <a href="/microsoft-to-do-to-google-tasks/">MoveMyTodo</a> writes your lists through Google's Tasks API.</td><td>Live in Gmail, Google Calendar or Android and want it free and simple.</td></tr>
+<tr><th scope="row">Apple Reminders</th><td>No importer. <a href="/microsoft-to-do-to-apple-reminders/">MoveMyTodo</a> makes a Mac import file; on iPhone there's a free route through an Outlook account.</td><td>Use iPhone, iPad and Mac and want it free and built in.</td></tr>
+<tr><th scope="row">Things 3</th><td>No To Do importer. <a href="/microsoft-to-do-to-things-3/">MoveMyTodo</a> sends lists to Things as projects; or go through Reminders.</td><td>Are on Apple devices and want a carefully designed paid app.</td></tr>
+<tr><th scope="row">Microsoft Planner</th><td>Work and school accounts only. Existing To Do tasks are not copied in; they stay visible in Planner until June 30, 2027.</td><td>Have a work account and your organisation uses Planner.</td></tr>
+<tr><th scope="row">Notion, Excel, Obsidian</th><td>Import the free CSV or Markdown <a href="/export-microsoft-to-do/">backup</a>.</td><td>Want tasks inside notes or a spreadsheet.</td></tr>
+</tbody></table></div>
+<p>Checked """ + CHECKED + """. Apps change their import options; check the app's own help pages before you rely on one.</p>
+<h2>Three questions to decide</h2>
+<ol>
+<li><b>Which devices do you use?</b> Only Apple devices: Reminders or Things. Android or Windows too: Google Tasks, Todoist or TickTick.</li>
+<li><b>Do you share lists?</b> Shared lists don't move as shared with any method; you re-share them in the new app. Check that it supports sharing the way your family or team needs before you move.</li>
+<li><b>Free or paid?</b> Google Tasks and Reminders are free. Todoist and TickTick have free plans with limits. Things is a one-time purchase per device.</li>
+</ol>
+<h2>Whichever you choose</h2>
+<p>Download a <a href="/export-microsoft-to-do/">free backup</a> first, so you keep a copy that doesn't depend on Microsoft or the new app. Then move, and keep To Do for a week or two until you're sure everything arrived.</p>
 """
   },
 ]
