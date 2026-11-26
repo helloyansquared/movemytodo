@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Move Microsoft To Do to Google Tasks (Lists, Steps, Dates)</title>
+<meta name="description" content="Google Tasks has no import button. Move every Microsoft To Do list to Google Tasks with steps as subtasks, notes and due dates, in about two minutes.">
+<link rel="canonical" href="https://movemytodo.com/microsoft-to-do-to-google-tasks/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article"><meta property="og:site_name" content="MoveMyTodo"><meta property="og:title" content="Move Microsoft To Do to Google Tasks (Lists, Steps, Dates)"><meta property="og:description" content="Google Tasks has no import button. Move every Microsoft To Do list to Google Tasks with steps as subtasks, notes and due dates, in about two minutes.">
+<meta property="og:url" content="https://movemytodo.com/microsoft-to-do-to-google-tasks/"><meta property="og:image" content="https://movemytodo.com/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/fonts/big-shoulders-display-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/public-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+[{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MoveMyTodo","item":"https://movemytodo.com/"},{"@type":"ListItem","position":2,"name":"To Do → Google Tasks","item":"https://movemytodo.com/microsoft-to-do-to-google-tasks/"}]},{"@context":"https://schema.org","@type":"TechArticle","headline":"How to move Microsoft To Do to Google Tasks","description":"Google Tasks has no import button. Move every Microsoft To Do list to Google Tasks with steps as subtasks, notes and due dates, in about two minutes.","url":"https://movemytodo.com/microsoft-to-do-to-google-tasks/","inLanguage":"en-US","datePublished":"2026-11-26","dateModified":"2026-11-26","image":"https://movemytodo.com/og.png","author":{"@id":"https://movemytodo.com/#org"},"publisher":{"@context":"https://schema.org","@type":"Organization","@id":"https://movemytodo.com/#org","name":"MoveMyTodo","url":"https://movemytodo.com/","logo":"https://movemytodo.com/logo.png","email":"hello@yansquared.com","parentOrganization":{"@type":"Organization","name":"YanSquared"}},"mainEntityOfPage":"https://movemytodo.com/microsoft-to-do-to-google-tasks/"},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I move Microsoft To Do to Google Tasks?","acceptedAnswer":{"@type":"Answer","text":"Yes. MoveMyTodo signs in to Google Tasks with your permission and creates a list for each To Do list, with steps as subtasks, notes, due dates and completed tasks. Google Tasks has no import button of its own."}},{"@type":"Question","name":"What happens to repeating tasks and reminders?","acceptedAnswer":{"@type":"Answer","text":"Due dates move everywhere. Google Tasks, Apple Reminders and Things can't receive a repeat rule through an import, so MoveMyTodo writes it into the task's notes, for example “Repeats: Every month on day 1”, and you set it again in the new app."}},{"@type":"Question","name":"Is it safe to sign in? What can MoveMyTodo see?","acceptedAnswer":{"@type":"Answer","text":"MoveMyTodo asks Microsoft for read-only access to your tasks, so it cannot change or delete anything in To Do. Your tasks are read straight into your browser tab and are never sent to or stored on our servers. Close the tab and they're gone."}},{"@type":"Question","name":"Is MoveMyTodo free?","acceptedAnswer":{"@type":"Answer","text":"Scanning and the full backup (CSV, Markdown, JSON, printable) are free with no limits. Moving to Google Tasks, Apple Reminders or Things is free for up to 25 tasks from one list; MoveMyTodo Pro moves everything for $6.99 once."}}]}]
+</script>
+<style>@font-face{font-family:"Big Shoulders Display";src:url(/fonts/big-shoulders-display-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Big Shoulders Stencil Display";src:url(/fonts/big-shoulders-stencil-display-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(/fonts/public-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(/fonts/public-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(/fonts/public-sans-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{--kraft:#e9d8b8;--paper:#fbf6ec;--ink:#1f2a44;--soft:#5b6478;--line:#d6c7a8;--tape:#f4c430;--tape2:#e0ad12;--blue:#2453c8;--green:#1e7a4f}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 "Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--blue)}h1,h2{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;line-height:1.04;text-wrap:balance;text-transform:uppercase}
+.top{background:var(--ink);color:#fff;padding:16px 0 0}.top a{color:#fff;text-decoration:none}
+.wrap{max-width:800px;margin:0 auto;padding:0 max(4vw,18px)}
+.logo{font:800 24px/1 "Big Shoulders Stencil Display","Big Shoulders Display",Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase}
+.band{background:var(--kraft);border-bottom:3px solid var(--ink);margin-top:16px;padding:18px 0 30px}
+.crumbs{font-size:14px;color:#4a536b;margin:0 0 6px}.crumbs a{color:var(--ink)}
+.band h1{font-size:clamp(34px,5.4vw,54px);margin:4px 0 0}
+main{padding:28px 0 44px}.answer{font-size:19px;line-height:1.6;border-left:5px solid var(--tape);padding:4px 0 4px 16px;margin:0 0 18px}
+.cta{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;border-radius:10px;border:2px solid var(--ink);background:var(--tape);color:var(--ink);font-weight:700;text-decoration:none;box-shadow:4px 4px 0 var(--ink)}
+.meta{font-size:14px;color:var(--soft);margin:16px 0 26px}
+h2{font-size:clamp(26px,3.4vw,34px);margin:36px 0 10px}li{margin:6px 0}
+code{font:.9em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#efe6d3;padding:1px 5px;border-radius:5px}
+pre{background:var(--ink);color:#f6f0de;border-radius:10px;padding:14px;overflow:auto}pre code{background:none;color:inherit;padding:0}
+.facts,.cmp{border-collapse:collapse;width:100%;margin:12px 0;border:2px solid var(--ink);font-size:15.5px;background:#fff}.facts caption{text-align:left;color:var(--soft);font-size:13px;padding-bottom:6px}
+.facts th,.facts td,.cmp th,.cmp td{padding:9px 12px;border-top:1px solid var(--line);text-align:left;vertical-align:top}.facts th{width:30%}.cmp thead th{background:var(--ink);color:#fff}
+details{border-bottom:1.5px solid var(--line);padding:4px 0}summary{cursor:pointer;font-weight:700;min-height:46px;display:flex;align-items:center}details p{margin:2px 0 14px;color:#3c4560}
+.related{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:16px 18px;margin-top:30px}.related ul{margin:6px 0 0;padding-left:20px}
+footer{background:var(--ink);color:#c9d0e4;font-size:14px;padding:26px 0}footer a{color:#fff}.foot{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:10px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px}</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="logo" href="/">MoveMyTodo</a></div>
+<div class="band"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">MoveMyTodo</a> › To Do → Google Tasks</nav>
+  <h1>How to move Microsoft To Do to Google Tasks</h1>
+</div></div></header>
+<main class="wrap">
+<p class="answer">Google Tasks has no import feature, so the only ways across are retyping or a tool that writes through Google's Tasks API. With MoveMyTodo you sign in to Microsoft (read-only), pick your lists, then connect Google Tasks: each To Do list becomes a Google Tasks list, steps become subtasks, and notes, due dates and completed tasks come along.</p>
+<a class="cta" href="/#app">Scan my To Do lists</a>
+<p class="meta">Last updated: <time datetime="2026-11-26">November 26, 2026</time> · Free scan and backup · Read-only sign-in</p>
+
+<h2>Steps</h2>
+<ol>
+<li>On <a href="/#app">MoveMyTodo</a>, click <b>Sign in with Microsoft</b> and use the account you use for To Do. Microsoft asks you to allow <i>read</i> access to your tasks.</li>
+<li>Check the numbers (lists, tasks, steps) and untick any lists you don't want. Download the free CSV backup while you're there.</li>
+<li>In <b>Move to your new app</b>, choose <b>Google Tasks</b> and click <b>Connect Google Tasks &amp; move</b>.</li>
+<li>Pick your Google account and allow access to Google Tasks. The lists appear in Google Tasks as they're written; a big account takes a few minutes.</li>
+<li>Open <a href="https://tasks.google.com/">tasks.google.com</a>, Gmail's side panel or the Google Tasks app to check them.</li>
+</ol>
+<h2>What carries over</h2>
+<table class="facts"><caption>Microsoft To Do → Google Tasks</caption>
+<tr><th scope="row">Lists</th><td>A new Google Tasks list for each To Do list. If you already have a list with the same name, the new one is called “… (from To Do)”.</td></tr>
+<tr><th scope="row">Steps</th><td>Become subtasks (Google Tasks allows one level), ticked if they were done.</td></tr>
+<tr><th scope="row">Notes and links</th><td>Copied into the task's details. Google allows about 8,000 characters per note.</td></tr>
+<tr><th scope="row">Due dates</th><td>Copied. Google Tasks stores a date, not a time.</td></tr>
+<tr><th scope="row">Reminders and repeats</th><td>Written into the notes (“Reminder: 2026-12-03 09:00”, “Repeats: Every month on day 1”). Google's Tasks API can't set them, so add them again for the tasks that need them.</td></tr>
+<tr><th scope="row">Completed tasks</th><td>Optional. Moved as completed, under “Completed” in each list.</td></tr>
+<tr><th scope="row">Order</th><td>Kept: open tasks first, in To Do's order.</td></tr>
+</table>
+<h2>Without a tool</h2>
+<p>For a few tasks, retyping is fine. For more, there's no file you can upload to Google Tasks: it has no import menu, and Google Calendar's import creates events, not tasks. Automation services such as Zapier only copy <i>new</i> tasks as they're created, not the ones you already have.</p>
+
+<h2>Questions</h2>
+  <details open><summary>Can I move Microsoft To Do to Google Tasks?</summary><p>Yes. MoveMyTodo signs in to Google Tasks with your permission and creates a list for each To Do list, with steps as subtasks, notes, due dates and completed tasks. Google Tasks has no import button of its own.</p></details>
+  <details><summary>What happens to repeating tasks and reminders?</summary><p>Due dates move everywhere. Google Tasks, Apple Reminders and Things can't receive a repeat rule through an import, so MoveMyTodo writes it into the task's notes, for example “Repeats: Every month on day 1”, and you set it again in the new app.</p></details>
+  <details><summary>Is it safe to sign in? What can MoveMyTodo see?</summary><p>MoveMyTodo asks Microsoft for read-only access to your tasks, so it cannot change or delete anything in To Do. Your tasks are read straight into your browser tab and are never sent to or stored on our servers. Close the tab and they're gone.</p></details>
+  <details><summary>Is MoveMyTodo free?</summary><p>Scanning and the full backup (CSV, Markdown, JSON, printable) are free with no limits. Moving to Google Tasks, Apple Reminders or Things is free for up to 25 tasks from one list; MoveMyTodo Pro moves everything for $6.99 once.</p></details>
+<aside class="related"><b>Related guides</b><ul><li><a href="/microsoft-to-do-to-apple-reminders/">How to move Microsoft To Do to Apple Reminders</a></li><li><a href="/export-microsoft-to-do/">How to export Microsoft To Do (free)</a></li><li><a href="/microsoft-to-do-shutting-down/">Microsoft To Do is shutting down: what to do now</a></li><li><a href="/">MoveMyTodo: move Microsoft To Do to Google Tasks or Apple Reminders</a></li></ul></aside>
+</main>
+<footer><div class="wrap"><nav class="foot" aria-label="Guides"><a href="/microsoft-to-do-to-google-tasks/">To Do → Google Tasks</a><a href="/microsoft-to-do-to-apple-reminders/">To Do → Apple Reminders</a><a href="/export-microsoft-to-do/">Export To Do</a><a href="/microsoft-to-do-shutting-down/">To Do shutdown</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms &amp; refunds</a></nav>MoveMyTodo is an independent tool by YanSquared. It is not affiliated with, endorsed by or connected to Microsoft, Google, Apple or Cultured Code. Microsoft To Do is a trademark of Microsoft Corporation. Questions: <a href="mailto:hello@yansquared.com">hello@yansquared.com</a> · Last updated: November 26, 2026</div></footer>
+</body>
+</html>

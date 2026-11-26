@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Move Microsoft To Do to Apple Reminders (Mac &amp; iPhone)</title>
+<meta name="description" content="Move Microsoft To Do lists into Apple Reminders with notes, due dates and reminder times. A one-command Mac import, plus a free method for iPhone.">
+<link rel="canonical" href="https://movemytodo.com/microsoft-to-do-to-apple-reminders/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article"><meta property="og:site_name" content="MoveMyTodo"><meta property="og:title" content="Move Microsoft To Do to Apple Reminders (Mac &amp; iPhone)"><meta property="og:description" content="Move Microsoft To Do lists into Apple Reminders with notes, due dates and reminder times. A one-command Mac import, plus a free method for iPhone.">
+<meta property="og:url" content="https://movemytodo.com/microsoft-to-do-to-apple-reminders/"><meta property="og:image" content="https://movemytodo.com/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/fonts/big-shoulders-display-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/public-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+[{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MoveMyTodo","item":"https://movemytodo.com/"},{"@type":"ListItem","position":2,"name":"To Do → Apple Reminders","item":"https://movemytodo.com/microsoft-to-do-to-apple-reminders/"}]},{"@context":"https://schema.org","@type":"TechArticle","headline":"How to move Microsoft To Do to Apple Reminders","description":"Move Microsoft To Do lists into Apple Reminders with notes, due dates and reminder times. A one-command Mac import, plus a free method for iPhone.","url":"https://movemytodo.com/microsoft-to-do-to-apple-reminders/","inLanguage":"en-US","datePublished":"2026-11-26","dateModified":"2026-11-26","image":"https://movemytodo.com/og.png","author":{"@id":"https://movemytodo.com/#org"},"publisher":{"@context":"https://schema.org","@type":"Organization","@id":"https://movemytodo.com/#org","name":"MoveMyTodo","url":"https://movemytodo.com/","logo":"https://movemytodo.com/logo.png","email":"hello@yansquared.com","parentOrganization":{"@type":"Organization","name":"YanSquared"}},"mainEntityOfPage":"https://movemytodo.com/microsoft-to-do-to-apple-reminders/"},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I move Microsoft To Do to Apple Reminders?","acceptedAnswer":{"@type":"Answer","text":"Yes, on a Mac: MoveMyTodo makes an import file that adds a Reminders list for each To Do list, with notes, due dates, reminder times and flags, and iCloud syncs it to your iPhone. Without a Mac, see the free iPhone method in our Apple Reminders guide."}},{"@type":"Question","name":"What happens to repeating tasks and reminders?","acceptedAnswer":{"@type":"Answer","text":"Due dates move everywhere. Google Tasks, Apple Reminders and Things can't receive a repeat rule through an import, so MoveMyTodo writes it into the task's notes, for example “Repeats: Every month on day 1”, and you set it again in the new app."}},{"@type":"Question","name":"Will moving delete anything from To Do?","acceptedAnswer":{"@type":"Answer","text":"No. MoveMyTodo only reads To Do, and in the new app it only adds new lists, never changing or deleting the lists you already have there."}},{"@type":"Question","name":"Is MoveMyTodo free?","acceptedAnswer":{"@type":"Answer","text":"Scanning and the full backup (CSV, Markdown, JSON, printable) are free with no limits. Moving to Google Tasks, Apple Reminders or Things is free for up to 25 tasks from one list; MoveMyTodo Pro moves everything for $6.99 once."}}]}]
+</script>
+<style>@font-face{font-family:"Big Shoulders Display";src:url(/fonts/big-shoulders-display-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Big Shoulders Stencil Display";src:url(/fonts/big-shoulders-stencil-display-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(/fonts/public-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(/fonts/public-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(/fonts/public-sans-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{--kraft:#e9d8b8;--paper:#fbf6ec;--ink:#1f2a44;--soft:#5b6478;--line:#d6c7a8;--tape:#f4c430;--tape2:#e0ad12;--blue:#2453c8;--green:#1e7a4f}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 "Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--blue)}h1,h2{font-family:"Big Shoulders Display",Impact,sans-serif;font-weight:800;line-height:1.04;text-wrap:balance;text-transform:uppercase}
+.top{background:var(--ink);color:#fff;padding:16px 0 0}.top a{color:#fff;text-decoration:none}
+.wrap{max-width:800px;margin:0 auto;padding:0 max(4vw,18px)}
+.logo{font:800 24px/1 "Big Shoulders Stencil Display","Big Shoulders Display",Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase}
+.band{background:var(--kraft);border-bottom:3px solid var(--ink);margin-top:16px;padding:18px 0 30px}
+.crumbs{font-size:14px;color:#4a536b;margin:0 0 6px}.crumbs a{color:var(--ink)}
+.band h1{font-size:clamp(34px,5.4vw,54px);margin:4px 0 0}
+main{padding:28px 0 44px}.answer{font-size:19px;line-height:1.6;border-left:5px solid var(--tape);padding:4px 0 4px 16px;margin:0 0 18px}
+.cta{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;border-radius:10px;border:2px solid var(--ink);background:var(--tape);color:var(--ink);font-weight:700;text-decoration:none;box-shadow:4px 4px 0 var(--ink)}
+.meta{font-size:14px;color:var(--soft);margin:16px 0 26px}
+h2{font-size:clamp(26px,3.4vw,34px);margin:36px 0 10px}li{margin:6px 0}
+code{font:.9em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#efe6d3;padding:1px 5px;border-radius:5px}
+pre{background:var(--ink);color:#f6f0de;border-radius:10px;padding:14px;overflow:auto}pre code{background:none;color:inherit;padding:0}
+.facts,.cmp{border-collapse:collapse;width:100%;margin:12px 0;border:2px solid var(--ink);font-size:15.5px;background:#fff}.facts caption{text-align:left;color:var(--soft);font-size:13px;padding-bottom:6px}
+.facts th,.facts td,.cmp th,.cmp td{padding:9px 12px;border-top:1px solid var(--line);text-align:left;vertical-align:top}.facts th{width:30%}.cmp thead th{background:var(--ink);color:#fff}
+details{border-bottom:1.5px solid var(--line);padding:4px 0}summary{cursor:pointer;font-weight:700;min-height:46px;display:flex;align-items:center}details p{margin:2px 0 14px;color:#3c4560}
+.related{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:16px 18px;margin-top:30px}.related ul{margin:6px 0 0;padding-left:20px}
+footer{background:var(--ink);color:#c9d0e4;font-size:14px;padding:26px 0}footer a{color:#fff}.foot{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:10px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:2px}</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="logo" href="/">MoveMyTodo</a></div>
+<div class="band"><div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">MoveMyTodo</a> › To Do → Apple Reminders</nav>
+  <h1>How to move Microsoft To Do to Apple Reminders</h1>
+</div></div></header>
+<main class="wrap">
+<p class="answer">Apple Reminders has no import button, but a Mac can add reminders from a script. MoveMyTodo reads your To Do lists (read-only) and gives you an import file; one Terminal command adds a Reminders list for each To Do list, with notes, due dates, reminder times and flags, and iCloud syncs them to your iPhone and iPad.</p>
+<a class="cta" href="/#app">Scan my To Do lists</a>
+<p class="meta">Last updated: <time datetime="2026-11-26">November 26, 2026</time> · Free scan and backup · Read-only sign-in</p>
+
+<h2>On a Mac</h2>
+<ol>
+<li>On <a href="/#app">MoveMyTodo</a>, sign in with Microsoft and pick your lists.</li>
+<li>Open the <b>Apple Reminders</b> tab and click <b>Download the Reminders import file</b>. It saves <code>import-to-reminders.js</code> to Downloads.</li>
+<li>Open Terminal (⌘ Space, type “Terminal”) and run:<pre><code>osascript -l JavaScript ~/Downloads/import-to-reminders.js</code></pre></li>
+<li>Allow Terminal to control Reminders when macOS asks. When it prints “Done: added … reminders”, open Reminders.</li>
+</ol>
+<p>The script only adds new lists. If you already have a Reminders list with the same name, the new one is called “… (To Do)”. Make sure iCloud is turned on for Reminders (System Settings → your name → iCloud) so the lists reach your iPhone.</p>
+<h2>What carries over</h2>
+<table class="facts"><caption>Microsoft To Do → Apple Reminders</caption>
+<tr><th scope="row">Lists</th><td>A new Reminders list for each To Do list.</td></tr>
+<tr><th scope="row">Notes, links</th><td>Copied into the reminder's notes.</td></tr>
+<tr><th scope="row">Due dates and reminders</th><td>Due dates become all-day due dates; reminder times become alerts.</td></tr>
+<tr><th scope="row">Important</th><td>Flagged, with high priority.</td></tr>
+<tr><th scope="row">Steps</th><td>Listed in the notes as a checklist (“◻︎ Passport”). Apple's scripting interface can't create subtasks.</td></tr>
+<tr><th scope="row">Repeats</th><td>Written into the notes; set them again in Reminders.</td></tr>
+<tr><th scope="row">Completed tasks</th><td>Optional; added and marked completed.</td></tr>
+</table>
+<h2 id="iphone">On an iPhone or iPad, without a Mac</h2>
+<p>There's a free route that uses Apple's own Exchange support, while To Do still works:</p>
+<ol>
+<li>On the iPhone, open <b>Settings → Apps → Reminders → Reminders Accounts → Add Account</b> (on older iOS: Settings → Mail → Accounts → Add Account) and choose <b>Outlook.com</b>. Sign in with your To Do account and turn on <b>Reminders</b>.</li>
+<li>Open Reminders. Your To Do lists appear under the Outlook account.</li>
+<li>Open each list, tap <b>⋯ → Select Reminders</b>, select all, tap the folder icon and move them to an <b>iCloud</b> list.</li>
+</ol>
+<p>Limits: To Do's steps, file attachments and some repeat rules don't come through this way, and anything left in the Outlook account disappears when To Do's service is switched off. Download the <a href="/#backup">free backup</a> first so you keep a full copy.</p>
+
+<h2>Questions</h2>
+  <details open><summary>Can I move Microsoft To Do to Apple Reminders?</summary><p>Yes, on a Mac: MoveMyTodo makes an import file that adds a Reminders list for each To Do list, with notes, due dates, reminder times and flags, and iCloud syncs it to your iPhone. Without a Mac, see the free iPhone method in our Apple Reminders guide.</p></details>
+  <details><summary>What happens to repeating tasks and reminders?</summary><p>Due dates move everywhere. Google Tasks, Apple Reminders and Things can't receive a repeat rule through an import, so MoveMyTodo writes it into the task's notes, for example “Repeats: Every month on day 1”, and you set it again in the new app.</p></details>
+  <details><summary>Will moving delete anything from To Do?</summary><p>No. MoveMyTodo only reads To Do, and in the new app it only adds new lists, never changing or deleting the lists you already have there.</p></details>
+  <details><summary>Is MoveMyTodo free?</summary><p>Scanning and the full backup (CSV, Markdown, JSON, printable) are free with no limits. Moving to Google Tasks, Apple Reminders or Things is free for up to 25 tasks from one list; MoveMyTodo Pro moves everything for $6.99 once.</p></details>
+<aside class="related"><b>Related guides</b><ul><li><a href="/microsoft-to-do-to-google-tasks/">How to move Microsoft To Do to Google Tasks</a></li><li><a href="/export-microsoft-to-do/">How to export Microsoft To Do (free)</a></li><li><a href="/microsoft-to-do-shutting-down/">Microsoft To Do is shutting down: what to do now</a></li><li><a href="/">MoveMyTodo: move Microsoft To Do to Google Tasks or Apple Reminders</a></li></ul></aside>
+</main>
+<footer><div class="wrap"><nav class="foot" aria-label="Guides"><a href="/microsoft-to-do-to-google-tasks/">To Do → Google Tasks</a><a href="/microsoft-to-do-to-apple-reminders/">To Do → Apple Reminders</a><a href="/export-microsoft-to-do/">Export To Do</a><a href="/microsoft-to-do-shutting-down/">To Do shutdown</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms &amp; refunds</a></nav>MoveMyTodo is an independent tool by YanSquared. It is not affiliated with, endorsed by or connected to Microsoft, Google, Apple or Cultured Code. Microsoft To Do is a trademark of Microsoft Corporation. Questions: <a href="mailto:hello@yansquared.com">hello@yansquared.com</a> · Last updated: November 26, 2026</div></footer>
+</body>
+</html>
