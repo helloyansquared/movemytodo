@@ -385,3 +385,16 @@ PAGES = [
 """
   },
 ]
+
+# Who MoveMyTodo is for, and who should use something else. Plain statements, shown on /about/ and in llms.txt.
+BEST_FOR = [
+    "People with a personal Microsoft account (Outlook.com, Hotmail, Live, Microsoft 365 Personal or Family) who are moving to Google Tasks, Apple Reminders or Things 3, which have no Microsoft To Do importer of their own.",
+    "Anyone who wants a complete, free backup of their To Do lists (CSV, Markdown, JSON or a printable page) before June 30, 2027, whichever app they pick next.",
+    "People who want lists, steps, notes, due dates and completed tasks to arrive in the right lists, not retyped by hand.",
+]
+NOT_FOR = [
+    "Moving to Todoist or TickTick: both have free built-in Microsoft To Do importers, so MoveMyTodo isn't needed.",
+    "Most work or school accounts right now: many organizations block sign-in to apps from unverified publishers, including MoveMyTodo. Ask your IT admin, or use Planner, which Microsoft provides for those accounts.",
+    "Keeping To Do and another app in live two-way sync: MoveMyTodo copies once. File attachments aren't moved either; save them from To Do first.",
+]
+

@@ -370,6 +370,7 @@ footer{background:var(--ink);color:#c9d0e4;font-size:14.5px;padding:30px 0}foote
 <footer><div class="wrap"><nav class="foot" aria-label="Guides"><a href="/microsoft-to-do-to-google-tasks/">To Do → Google Tasks</a><a href="/microsoft-to-do-to-apple-reminders/">To Do → Apple Reminders</a><a href="/export-microsoft-to-do/">Export To Do</a><a href="/microsoft-to-do-shutting-down/">To Do shutdown</a><a href="/microsoft-to-do-to-things-3/">To Do → Things 3</a><a href="/microsoft-to-do-alternatives/">To Do alternatives</a><a href="/microsoft-to-do-to-planner/">To Do → Planner</a><a href="/microsoft-to-do-to-todoist/">To Do → Todoist</a><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms &amp; refunds</a><a href="https://github.com/helloyansquared/movemytodo">Source code on GitHub</a><a href="mailto:hello@yansquared.com">hello@yansquared.com</a></nav>© YanSquared · Not affiliated with or endorsed by Microsoft, Google or Apple · Last updated November 26, 2026</div></footer>
 
 <script src="/core.js?v=859f1e1c"></script>
+<script src="/found.js?v=859f1e1c" defer></script>
 <script>
 "use strict";
 const SITE = "https://movemytodo.com/";
@@ -411,7 +412,7 @@ window.addEventListener("storage", e => { if (e.key === LKEY && e.newValue) { se
 // ── UI helpers ────────────────────────────────────────────────────────────────
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 function status(msg, cls, el) { el = el || $("status"); el.textContent = msg; el.className = "status " + (cls || "");
-  if (cls === "ok" && el.id === "gStatus" && msg.startsWith("Done!")) el.insertAdjacentHTML("beforeend", '<span class="mstamp" aria-hidden="true">Moved</span>'); }
+  if (cls === "ok" && el.id === "gStatus" && msg.startsWith("Done!")) { el.insertAdjacentHTML("beforeend", '<span class="mstamp" aria-hidden="true">Moved</span>'); if (window.Found) Found.ask(); } }
 function progress(frac, el) { el = el || $("progress"); const was = el.classList.contains("busy");
   el.hidden = frac == null; el.classList.toggle("busy", frac != null && frac < 1);
   if (was && frac != null && frac >= 1) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
@@ -420,6 +421,7 @@ function download(name, text, type) {
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([text], { type: type || "text/plain;charset=utf-8" }));
   a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  if (window.Found) Found.ask();
   setTimeout(() => URL.revokeObjectURL(a.href), 4000);
 }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -620,6 +622,8 @@ $("goThings").onclick = () => {
   $("thingsLinks").innerHTML = m.lists.filter(l => l.tasks.length).flatMap(l => CORE.thingsChunks(l, 40).map((u, i, a) => `<a class="btn plain small" href="${CORE.esc(u)}">Add “${CORE.esc(l.name)}”${a.length > 1 ? ` part ${i + 1}/${a.length}` : ""}</a>`)).join("")
     + `<p style="width:100%;font-size:14.5px;color:var(--soft);margin:6px 0 0">Tap one button at a time and wait for Things to finish.${freeNotice(m)}</p>`;
 };
+
+$("thingsLinks").addEventListener("click", e => { if (e.target.closest("a") && window.Found) Found.ask(); });
 
 $("goTodoist").onclick = async () => {
   const m = selection();

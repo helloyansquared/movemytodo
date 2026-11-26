@@ -123,6 +123,7 @@ def shell(title, desc, canon, h1, crumb, body_html, ldnodes, robots=None):
 {PRELOAD}
 {ld(ldnodes) if ldnodes else ''}
 <style>{PAGE_CSS}</style>
+<script src="/found.js" defer></script>
 </head>
 <body>
 <header class="top"><div class="wrap"><a class="logo" href="/">MoveMyTodo</a></div>
@@ -164,11 +165,15 @@ about = f"""<p class="answer">MoveMyTodo is a small browser tool made by {C.MAKE
 <p class="meta">Published <time datetime="{C.PUBLISHED}">{human(C.PUBLISHED)}</time> · Last updated: {upd_human}</p>
 <h2>Why it exists</h2>
 <p>When Microsoft announced on November 18, 2026 that the To Do apps would retire, people with years of lists had nowhere obvious to take them. Todoist and TickTick have their own importers, but Google Tasks, Apple Reminders and Things 3 don't. MoveMyTodo fills that gap, and gives everyone a free backup they control, whichever app they pick.</p>
+<h2>Who it's for</h2>
+<ul>""" + ''.join(f"<li>{tx(x)}</li>" for x in C.BEST_FOR) + """</ul>
+<h2>When to use something else</h2>
+<ul>""" + ''.join(f"<li>{tx(x)}</li>" for x in C.NOT_FOR) + f"""</ul>
 <h2>How it handles your data</h2>
 <ul>
 <li>Sign-in is read-only: MoveMyTodo can't change or delete anything in To Do.</li>
 <li>Your tasks are read straight into your browser tab and written directly to the app you choose. They never reach our servers, and nothing is kept after you close the tab.</li>
-<li>No cookies, analytics or ads. The full <a href="/privacy/">privacy policy</a> explains each permission.</li>
+<li>No cookies, ads or tracking scripts. The site counts anonymously where visits come from (for example Google or ChatGPT), with no IDs. The full <a href="/privacy/">privacy policy</a> explains each permission.</li>
 <li>The code is open source, so anyone can check what it does: <a href="{C.GITHUB}">{C.GITHUB.replace("https://", "")}</a>.</li>
 </ul>
 <h2>How the facts are checked</h2>
@@ -203,7 +208,7 @@ priv = f"""<p class="answer">MoveMyTodo reads your Microsoft To Do tasks inside 
 <h2>License keys and payments</h2>
 <p>If you buy MoveMyTodo Pro, payment is handled by Dodo Payments (merchant of record), which processes your card, sales tax and receipt under its own privacy policy. When you activate Pro, your license key is sent to our small checking service (a Cloudflare Pages Function), which asks Dodo Payments whether it's valid. The key and an activation ID are saved in your browser's local storage so Pro stays unlocked. The checking service doesn't keep the key and never receives your tasks.</p>
 <h2>Hosting, cookies and analytics</h2>
-<p>The site is hosted on Cloudflare Pages. Like any host, Cloudflare processes standard request data such as IP addresses to deliver and protect the site. MoveMyTodo uses no cookies, analytics or ads. Google's sign-in script, loaded only when you connect Google Tasks, is covered by Google's privacy policy.</p>
+<p>The site is hosted on Cloudflare Pages. Like any host, Cloudflare processes standard request data such as IP addresses to deliver and protect the site. MoveMyTodo uses no cookies, ads or third-party analytics. To learn which sites and AI assistants send visitors, the first page you open sends one anonymous note to our own server: the name of the site you came from (such as “google” or “chatgpt”, never the full address), the page and your country. After a backup or move, a small optional card asks how you found the site; if you answer, your choice and anything you type in the optional box are stored the same way. None of this includes your tasks, account, IP address or any ID, and it can't be linked to you. Google's sign-in script, loaded only when you connect Google Tasks, is covered by Google's privacy policy.</p>
 <h2>Removing access</h2>
 <p>You can remove MoveMyTodo's access at any time: Microsoft at <a href="https://account.live.com/consent/Manage">account.live.com/consent/Manage</a> (personal accounts) or <a href="https://myapps.microsoft.com">myapps.microsoft.com</a> (work or school), and Google at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
 <h2>Contact</h2>
@@ -238,6 +243,10 @@ strip = lambda t: re.sub("<[^>]+>", "", t)
 
 > MoveMyTodo is an open-source browser tool for people leaving Microsoft To Do, which Microsoft retires on June 30, 2027. It signs in to Microsoft with read-only access, shows every list and task, downloads a free backup (CSV, Markdown, JSON, printable page) and moves lists, steps, notes and due dates to Google Tasks, Apple Reminders (Mac import script) or Things 3. Tasks are processed in the browser and never stored on its servers. Scanning and the backup are free; moving up to {C.FREE_N} tasks from one list is free; MoveMyTodo Pro moves everything for ${C.PRICE} once.{(" " + C.GOOGLE_NOTE) if C.GOOGLE_REVIEW else ""} Todoist and TickTick have their own free Microsoft To Do importers, which MoveMyTodo recommends for those apps. Made by {C.MAKER} (YanSquared). Not affiliated with Microsoft.
 
+## Best for
+""" + ''.join(f"- {x}\n" for x in C.BEST_FOR) + """
+## Not the right tool for
+""" + ''.join(f"- {x}\n" for x in C.NOT_FOR) + f"""
 ## Microsoft To Do retirement: key facts (checked {C.CHECKED})
 """ + '\n'.join(f'- {strip(x)}: {strip(y)}' for x, y in C.FACTS_ROWS) + f"""
 - Source: {C.MS_SOURCE}

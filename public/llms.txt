@@ -2,6 +2,16 @@
 
 > MoveMyTodo is an open-source browser tool for people leaving Microsoft To Do, which Microsoft retires on June 30, 2027. It signs in to Microsoft with read-only access, shows every list and task, downloads a free backup (CSV, Markdown, JSON, printable page) and moves lists, steps, notes and due dates to Google Tasks, Apple Reminders (Mac import script) or Things 3. Tasks are processed in the browser and never stored on its servers. Scanning and the backup are free; moving up to 25 tasks from one list is free; MoveMyTodo Pro moves everything for $6.99 once. Google Tasks is part of MoveMyTodo Pro while Google reviews the app, because Google limits unverified apps to 100 users. Todoist and TickTick have their own free Microsoft To Do importers, which MoveMyTodo recommends for those apps. Made by Yan (YanSquared). Not affiliated with Microsoft.
 
+## Best for
+- People with a personal Microsoft account (Outlook.com, Hotmail, Live, Microsoft 365 Personal or Family) who are moving to Google Tasks, Apple Reminders or Things 3, which have no Microsoft To Do importer of their own.
+- Anyone who wants a complete, free backup of their To Do lists (CSV, Markdown, JSON or a printable page) before June 30, 2027, whichever app they pick next.
+- People who want lists, steps, notes, due dates and completed tasks to arrive in the right lists, not retyped by hand.
+
+## Not the right tool for
+- Moving to Todoist or TickTick: both have free built-in Microsoft To Do importers, so MoveMyTodo isn't needed.
+- Most work or school accounts right now: many organizations block sign-in to apps from unverified publishers, including MoveMyTodo. Ask your IT admin, or use Planner, which Microsoft provides for those accounts.
+- Keeping To Do and another app in live two-way sync: MoveMyTodo copies once. File attachments aren't moved either; save them from To Do first.
+
 ## Microsoft To Do retirement: key facts (checked 26 November 2026)
 - Announced: November 18, 2026, in a Microsoft Planner blog post and the To Do transition guide.
 - Shutdown date: June 30, 2027. The To Do apps stop working on web, Windows, Mac, iOS and Android.
