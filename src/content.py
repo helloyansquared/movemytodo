@@ -72,6 +72,10 @@ QA = {
                 "No. Microsoft says existing To Do tasks and lists will not migrate to Planner, and personal accounts can't use Planner at all. You have to export or move them yourself before June 30, 2027."),
     "export": ("How do I export Microsoft To Do?",
                f"Sign in to MoveMyTodo with your Microsoft account and download a free backup as CSV (opens in Excel and Google Sheets), Markdown, JSON or a printable page. Microsoft's own export isn't available yet as of {CHECKED}."),
+    "excel": ("Can you export a Microsoft To Do list to Excel?",
+              "Yes. MoveMyTodo downloads every Microsoft To Do list as a free CSV file that opens in Excel or Google Sheets, with one row per task and columns for list, title, status, due date, reminder, repeats, steps and notes."),
+    "account": ("Can I move Microsoft To Do lists to another Microsoft account?",
+                "It wouldn't help for long: Microsoft To Do retires on June 30, 2027 for every account, so a second Microsoft account loses it on the same day. Download a free CSV backup of your lists and take them to the app you'll use next."),
     "google": ("Can I move Microsoft To Do to Google Tasks?",
                "Yes. MoveMyTodo signs in to Google Tasks with your permission and creates a list for each To Do list, with steps as subtasks, notes, due dates and completed tasks. Google Tasks has no import button of its own." + (" Until Google finishes reviewing MoveMyTodo, Google shows an extra “Google hasn't verified this app” screen first; choose Advanced there to continue." if GOOGLE_REVIEW else "")),
     "apple": ("Can I move Microsoft To Do to Apple Reminders?",
@@ -184,7 +188,7 @@ PAGES = [
     "description": "Microsoft To Do has no export button and Microsoft's promised export isn't out yet. Download every list, step and due date as CSV, Markdown, JSON or a printable page.",
     "h1": "How to export Microsoft To Do (free)",
     "answer": f"Microsoft To Do has no export button, and the export Microsoft promised before the June 30, 2027 shutdown isn't available yet (checked {CHECKED}). MoveMyTodo reads your lists through Microsoft's official API, read-only, and downloads them for free as CSV for Excel or Google Sheets, Markdown, JSON or a printable page, including steps, notes, due dates, reminders and repeat rules.",
-    "faq": ["export", "safe", "after", "work"],
+    "faq": ["export", "excel", "account", "safe", "after", "work"],
     "links": ["microsoft-to-do-shutting-down", "microsoft-to-do-to-google-tasks", "microsoft-to-do-to-apple-reminders"],
     "body": """
 <h2>Steps</h2>
