@@ -1,7 +1,9 @@
-// /api/hit: receives anonymous counts from /found.js (which site sent a visit; the optional
-// "how did you find us?" answer). No IPs, cookies or IDs are stored. Rows go to the D1 database
+// /api/hit: receives anonymous counts from /found.js (which site sent a visit; how far people get
+// through the tool; the optional "how did you find us?" answer). No IPs, cookies or IDs are stored. Rows go to the D1 database
 // bound as DB (table hits, kept 180 days) and to the Analytics Engine dataset bound as HITS.
 const TYPES = new Set(["land", "ask", "askq"]);
+// Funnel steps from Found.step(): stored with t = "s:<step>" and the short detail word in q.
+const STEPS = new Set(["s:demo", "s:signin", "s:start", "s:scan", "s:result", "s:backup", "s:save", "s:move", "s:moved", "s:wall", "s:buy", "s:paid"]);
 const ANSWERS = new Set(["ChatGPT", "Google", "Another AI", "Reddit", "Tumblr", "A friend", "Other", "dismissed", ""]);
 const KEEP_DAYS = 180;
 
@@ -40,14 +42,16 @@ export async function onRequestPost({ request, env, waitUntil }) {
 
   let d;
   try { d = JSON.parse(await request.text()); } catch { return none; }
-  if (!d || !TYPES.has(d.t)) return none;
+  if (!d || !(TYPES.has(d.t) || STEPS.has(d.t))) return none;
+  const isStep = STEPS.has(d.t);
   const src = clean(d.src, 60).toLowerCase();
   if (src && !/^[a-z0-9.:_-]{1,60}$/.test(src)) return none;
   const path = clean(d.path, 80);
   if (path && !path.startsWith("/")) return none;
   const ans = clean(d.ans, 20);
   if (!ANSWERS.has(ans)) return none;
-  const q = d.t === "askq" ? scrub(clean(d.q, 200)) : "";
+  let q = d.t === "askq" ? scrub(clean(d.q, 200)) : "";
+  if (isStep) { q = clean(d.q, 24).toLowerCase(); if (q && !/^[a-z0-9-]{1,24}$/.test(q)) return none; }
   if (d.t === "askq" && !q) return none;
   const country = clean(request.cf && request.cf.country, 2);
   if (d.t === "land" && ip && seenLanding(new Date(now).toISOString().slice(0, 10) + "|" + ip + "|" + site + "|" + src)) return none;

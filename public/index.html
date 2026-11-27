@@ -385,6 +385,8 @@ const FREE_N = 25;
 const GOOGLE_REVIEW = true;
 if (!GOOGLE_REVIEW) document.documentElement.classList.add("no-review");
 const $ = id => document.getElementById(id);
+// Funnel counts (anonymous, see /found.js): signin → scan → backup / move → wall → buy → paid.
+const step = (n, d) => { try { if (window.Found) Found.step(n, d); } catch (e) {} };
 document.querySelectorAll(".PRICE").forEach(e => e.textContent = PRICE);
 document.querySelectorAll(".FREE_N").forEach(e => e.textContent = FREE_N);
 
@@ -395,12 +397,13 @@ const NO_SHOP = PRODUCT_ID.startsWith("__");
 let PRO = NO_SHOP || !!store.get();
 const BUY_URL = NO_SHOP ? "" : `https://checkout.dodopayments.com/buy/${PRODUCT_ID}?quantity=1&redirect_url=${encodeURIComponent(SITE + "?unlock=1")}`;
 $("buy").href = BUY_URL || "#";
+$("buy").addEventListener("click", () => step("buy"));
 function setPro(v) { PRO = v; $("pay").hidden = v; $("freeBox").hidden = v; $("proBox").hidden = !v; $("gProOnly").hidden = v; $("goGoogle").textContent = GOOGLE_REVIEW && !v ? "Move to Google Tasks with Pro" : "Connect Google Tasks & move"; }
 async function activate(key, where) {
   where.textContent = "Checking your key…"; where.className = "";
   try {
     const r = await (await fetch("/api/license", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "activate", license_key: key, name: "web " + new Date().toISOString().slice(0, 10) }) })).json();
-    if (r.ok) { store.set({ key, id: r.id, at: Date.now() }); setPro(true); where.textContent = "Pro is unlocked on this browser. Thank you!"; where.className = "ok"; return true; }
+    if (r.ok) { store.set({ key, id: r.id, at: Date.now() }); setPro(true); step("paid", where.id === "paidText" ? "checkout" : "manual"); where.textContent = "Pro is unlocked on this browser. Thank you!"; where.className = "ok"; return true; }
     where.textContent = { not_found: "That key wasn't found. Check it against the email from Dodo Payments.", inactive: "That key isn't active. If you were refunded, it has been switched off.", limit: "This key is already active on 3 browsers. Email hello@yansquared.com and we'll reset it.", wrong_product: "That key is for a different product." }[r.error] || "Couldn't check the key right now. Please try again in a minute.";
     where.className = "err";
   } catch (e) { where.textContent = "Couldn't reach the license check. Are you online?"; where.className = "err"; }
@@ -437,6 +440,7 @@ async function signIn() {
   const verifier = rand(48), state = rand(16);
   const challenge = b64url(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(verifier)));
   sessionStorage.setItem("mmt-pkce", JSON.stringify({ verifier, state }));
+  step("signin");
   const p = new URLSearchParams({ client_id: MS_CLIENT_ID, response_type: "code", redirect_uri: SITE, scope: MS_SCOPE, state, code_challenge: challenge, code_challenge_method: "S256", prompt: "select_account", response_mode: "query" });
   location.href = MS_AUTH + "authorize?" + p;
 }
@@ -511,6 +515,7 @@ async function scan(token, account) {
     await Promise.all([worker(), worker(), worker()]);
     const m = CORE.buildModel(results, account);
     show(m);
+    const n = m.stats.tasks; step("scan", !n ? "empty" : n <= 25 ? "upto25" : n <= 100 ? "upto100" : n <= 500 ? "upto500" : "over500");
     const who = account && account.email ? account.email : "this Microsoft account";
     if (!m.stats.tasks) status(`Signed in as ${who}, but its To Do lists are empty. If you keep your tasks in another Microsoft account (for example a work one, or another outlook.com address), click “Sign in with Microsoft” again and pick that account.`, "err");
     else status(`Done. Signed in as ${who}. Your tasks are only in this tab; close it and they're gone.`, "ok");
@@ -589,6 +594,7 @@ function demo() {
     { list: { id: "d4", displayName: "Work" }, tasks: [T("Quarterly report", { dueDateTime: d("2026-12-12"), categories: ["Red category"], checklistItems: [{ displayName: "Numbers", isChecked: true }, { displayName: "Charts" }] }), T("1:1 notes", { recurrence: { pattern: { type: "weekly", interval: 1, daysOfWeek: ["monday"] }, range: { type: "noEnd" } } })] },
   ];
   show(CORE.buildModel(lists, { name: "Sample", email: "" }));
+  step("demo");
   status("This is sample data. Sign in with Microsoft to see your own lists.", "ok");
   location.hash = "#app";
 }
@@ -599,6 +605,7 @@ const stamp = () => new Date().toISOString().slice(0, 10);
 document.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => {
   const m = selection(), k = b.dataset.dl;
   if (!m.stats.tasks && !m.lists.length) { alert("Pick at least one list first."); return; }
+  step("backup", k);
   if (k === "csv") download(`microsoft-to-do-${stamp()}.csv`, CORE.toCSV(m), "text/csv;charset=utf-8");
   if (k === "md") download(`microsoft-to-do-${stamp()}.md`, CORE.toMarkdown(m), "text/markdown;charset=utf-8");
   if (k === "json") download(`microsoft-to-do-${stamp()}.json`, CORE.toJSON(m), "application/json");
@@ -611,22 +618,27 @@ tabs.forEach(t => t.onclick = () => { tabs.forEach(x => { x.setAttribute("aria-s
 document.querySelectorAll("[data-tab]").forEach(a => a.onclick = e => { e.preventDefault(); $(a.dataset.tab).click(); $(a.dataset.tab).scrollIntoView({ block: "center", behavior: "smooth" }); });
 
 function freeNotice(m) { return !PRO && m.partial ? ` (free: first ${FREE_N} tasks of this list)` : ""; }
+// One "move" per destination and plan; a free move that leaves tasks behind also counts as reaching the paywall.
+function moveStep(m, dest) { step("move", dest + (PRO ? "-pro" : "-free")); if (!PRO && m.partial) step("wall", "limit-" + dest); }
 
 // ── Apple Reminders & Things ─────────────────────────────────────────────────
 $("goApple").onclick = () => {
   const m = forMove(); if (!m.stats.tasks) { alert("Nothing selected to move."); return; }
+  moveStep(m, "reminders");
   download("import-to-reminders.js", CORE.remindersScript(m).replace("__SITE_NAME__", "MoveMyTodo (" + SITE + ")"), "text/javascript;charset=utf-8");
 };
 $("goThings").onclick = () => {
   const m = forMove(); if (!m.stats.tasks) { alert("Nothing selected to move."); return; }
+  moveStep(m, "things");
   $("thingsLinks").innerHTML = m.lists.filter(l => l.tasks.length).flatMap(l => CORE.thingsChunks(l, 40).map((u, i, a) => `<a class="btn plain small" href="${CORE.esc(u)}">Add “${CORE.esc(l.name)}”${a.length > 1 ? ` part ${i + 1}/${a.length}` : ""}</a>`)).join("")
     + `<p style="width:100%;font-size:14.5px;color:var(--soft);margin:6px 0 0">Tap one button at a time and wait for Things to finish.${freeNotice(m)}</p>`;
 };
 
-$("thingsLinks").addEventListener("click", e => { if (e.target.closest("a") && window.Found) Found.ask(); });
+$("thingsLinks").addEventListener("click", e => { if (e.target.closest("a")) { step("moved", "things-" + (PRO ? "pro" : "free")); if (window.Found) Found.ask(); } });
 
 $("goTodoist").onclick = async () => {
   const m = selection();
+  step("backup", "todoist");
   for (const l of m.lists) {
     const open = l.tasks.filter(t => !t.completed);
     if (!open.length) continue;
@@ -679,9 +691,11 @@ $("goGoogle").onclick = async () => {
   const m = forMove(); if (!m.stats.tasks) { alert("Nothing selected to move."); return; }
   if (GOOGLE_CLIENT_ID.startsWith("__")) { status("Google Tasks isn't connected on this copy yet.", "err", $("gStatus")); return; }
   if (GOOGLE_REVIEW && !PRO) {
+    step("wall", "google");
     status(`Google Tasks is part of Pro until Google finishes verifying MoveMyTodo. Unlock Pro below ($${PRICE}, 14-day refund), or move ${FREE_N} tasks free to Apple Reminders or Things 3.`, "err", $("gStatus"));
     $("pay").scrollIntoView({ block: "center", behavior: "smooth" }); return;
   }
+  moveStep(m, "google");
   const btn = $("goGoogle"); btn.disabled = true; $("gLog").innerHTML = "";
   if (REVIEW_DEMO) { googleRedirect(); return; }
   try {
@@ -722,6 +736,7 @@ async function moveToGoogle(m, token) {
       log(`✓ ${title}: ${plural(L.tasks.length, "task")}`);
     }
     status(`Done! ${plural(done, "task")} and subtasks are in Google Tasks.${freeNotice(m)}`, "ok", $("gStatus"));
+    step("moved", "google-" + (PRO ? "pro" : "free"));
     $("gLog").insertAdjacentHTML("afterbegin", `<div><a href="https://tasks.google.com/" target="_blank" rel="noopener">Open Google Tasks →</a></div>`);
   }
 }

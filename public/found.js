@@ -2,7 +2,10 @@
    - Found.land(): once per tab session, sends {t:"land", src, path} to /api/hit, where src is the site that
      sent the visit (chatgpt, perplexity, google, reddit, a hostname, or "direct"). Raw URLs are never sent.
    - Found.ask(): after something worked, shows a skippable one-question card ("How did you find us?"),
-     at most once per browser. The answer and the optional "what did you search or ask?" go to /api/hit too. */
+     at most once per browser. The answer and the optional "what did you search or ask?" go to /api/hit too.
+   - Found.step(name, detail): counts how far people get through the tool (for example "scan", "wall", "buy",
+     "paid"), once per tab session per step. Sends only the step name, a short fixed detail word, the page path
+     and the session's source. Never any content, account or ID. */
 (function () {
   var SITE = location.hostname.replace(/^www\./, "");
   var AI = [["chatgpt", /(^|\.)(chatgpt\.com|chat\.openai\.com|openai\.com)$/], ["perplexity", /(^|\.)perplexity\.ai$/],
@@ -67,6 +70,13 @@
     });
     setTimeout(function () { document.body.appendChild(box); }, 900);
   }
-  window.Found = { land: land, ask: ask };
+  function step(name, detail) {
+    name = String(name || "").toLowerCase(); detail = String(detail || "").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 24);
+    if (!/^[a-z]{2,12}$/.test(name)) return;
+    var k = "found-s:" + name + ":" + detail;
+    if (ss(k)) return; ss(k, "1");
+    send({ t: "s:" + name, src: ss("found-src") || "", path: location.pathname.slice(0, 80), q: detail });
+  }
+  window.Found = { land: land, ask: ask, step: step };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", land); else land();
 })();
