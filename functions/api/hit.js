@@ -5,6 +5,24 @@ const TYPES = new Set(["land", "ask", "askq"]);
 const ANSWERS = new Set(["ChatGPT", "Google", "Another AI", "Reddit", "Tumblr", "A friend", "Other", "dismissed", ""]);
 const KEEP_DAYS = 180;
 
+// Spam guard, in memory only (per Cloudflare isolate, so approximate). The IP is used here to
+// count requests and is never written anywhere. A visitor normally sends 1 to 3 hits per visit.
+const WINDOW_MS = 10_000, MAX_PER_WINDOW = 20;
+const recent = new Map();   // ip -> { t, n }
+const landed = new Map();   // "day|ip|site|src" -> 1, so repeat landings count once a day
+function tooMany(ip, now) {
+  const e = recent.get(ip);
+  if (!e || now - e.t > WINDOW_MS) { if (recent.size > 5000) recent.clear(); recent.set(ip, { t: now, n: 1 }); return false; }
+  e.n += 1;
+  return e.n > MAX_PER_WINDOW;
+}
+function seenLanding(key) {
+  if (landed.has(key)) return true;
+  if (landed.size > 20000) landed.clear();
+  landed.set(key, 1);
+  return false;
+}
+
 const clean = (v, n) => String(v == null ? "" : v).replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, n);
 // Free text is anonymous by design: strip anything that looks like an email address or a long number.
 const scrub = (s) => s.replace(/[^\s@]+@[^\s@]+\.[^\s@]+/g, "[email]").replace(/\d[\d\s().-]{6,}\d/g, "[number]");
@@ -16,6 +34,9 @@ export async function onRequestPost({ request, env, waitUntil }) {
   const origin = request.headers.get("origin");
   if (origin) { try { if (new URL(origin).hostname !== url.hostname) return none; } catch { return none; } }
   if (Number(request.headers.get("content-length") || 0) > 2000) return new Response(null, { status: 413 });
+  const ip = request.headers.get("cf-connecting-ip") || "";
+  const now = Date.now();
+  if (ip && tooMany(ip, now)) return new Response(null, { status: 429 });
 
   let d;
   try { d = JSON.parse(await request.text()); } catch { return none; }
@@ -29,6 +50,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   const q = d.t === "askq" ? scrub(clean(d.q, 200)) : "";
   if (d.t === "askq" && !q) return none;
   const country = clean(request.cf && request.cf.country, 2);
+  if (d.t === "land" && ip && seenLanding(new Date(now).toISOString().slice(0, 10) + "|" + ip + "|" + site + "|" + src)) return none;
 
   try { if (env.HITS) env.HITS.writeDataPoint({ indexes: [site], blobs: [d.t, site, src, path, ans, q, country], doubles: [1] }); }
   catch (e) { console.log("ae error", String(e)); }
